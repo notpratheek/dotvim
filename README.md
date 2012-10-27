@@ -11,3 +11,11 @@ Feel free to borrow it ! :)
 #### Create Symlinks ####
 
     ln -s ~/.vim/vimrc ~/.vimrc
+
+#### Adding Plugins (Or other Vim stuff) ####
+
+    cd ~/.vim (IF your not in .vim folder !)
+
+Then copy the url that you would use to clone a repo, and then 
+
+    git submodule add &lt; The url of the repo &gt; bundle/&lt;repo's name&gt;
