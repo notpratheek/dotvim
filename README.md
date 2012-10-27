@@ -18,4 +18,4 @@ Feel free to borrow it ! :)
 
 Then copy the url that you would use to clone a repo, and then 
 
-    git submodule add &lt; The url of the repo &gt; bundle/&lt;repo's name&gt;
+    git submodule add <The url of the repo> bundle/<repo's name>
