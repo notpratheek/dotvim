@@ -1,3 +1,7 @@
+set nocompatible
+
+call pathogen#infect()
+
 set t_Co=256
 set number
 set ai
