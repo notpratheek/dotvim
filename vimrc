@@ -10,7 +10,7 @@ syntax on
 filetype indent plugin on
 syntax enable
 set background=light
-set guifont=Monaco\ for\ Powerline\ 13
+set guifont=Monaco\ 13
 set guioptions-=T "removes toolbar
 set guioptions-=r "removes right scroll bar
 set guioptions-=m "removes menubar
@@ -28,9 +28,9 @@ endif
 
 set statusline=
 set statusline+=(%t)\ 
+set statusline+=%m\ 
 set statusline+=%=\ 
 set statusline+=%r\ 
-set statusline+=%m\ 
 set statusline+=%Y\ 
 set statusline+=(%l/%L)\ 
 set statusline+=(%p%%)\ 
