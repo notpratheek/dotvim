@@ -22,7 +22,7 @@ let g:indent_guides_enable_on_vim_startup = 1
 
 
 if has('gui_running')
-    colorscheme solarized
+    colorscheme hexlt
 else
     colorscheme LightTwist
 endif

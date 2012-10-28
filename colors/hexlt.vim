@@ -71,5 +71,5 @@ hi PmenuSel      guifg=#cb4b16 guibg=#002b36 gui=NONE
 hi PmenuSbar     guifg=#002b36 guibg=#002b36 gui=NONE
 hi PmenuThumb    guifg=#002b36 guibg=#002b36 gui=NONE
 hi MatchParen    guifg=#000000 guibg=#ff4040 gui=NONE
-hi CursorLine    guifg=NONE    guibg=#b4b4b4 gui=NONE
+hi CursorLine    guifg=NONE    guibg=#cecece gui=NONE
 hi CursorColumn  guifg=NONE    guibg=#a4c639 gui=NONE
