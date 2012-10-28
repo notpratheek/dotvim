@@ -10,7 +10,7 @@ syntax on
 filetype indent plugin on
 syntax enable
 set background=light
-set guifont=Monaco\ 13
+set guifont=Monaco\ for\ Powerline\ 13
 set guioptions-=T "removes toolbar
 set guioptions-=r "removes right scroll bar
 set guioptions-=m "removes menubar
@@ -19,7 +19,6 @@ set cursorline
 
 let g:indent_guides_guide_size = 1
 let g:indent_guides_enable_on_vim_startup = 1
-
 
 if has('gui_running')
     colorscheme hexlt

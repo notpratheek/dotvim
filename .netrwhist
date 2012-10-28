@@ -1,8 +1,5 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
-let g:netrw_dirhist_1='/'
-let g:netrw_dirhist_2='/run'
-let g:netrw_dirhist_3='/run/media'
-let g:netrw_dirhist_4='/run/media/pratheek'
-let g:netrw_dirhist_5='/run/media/pratheek/Transcend'
-let g:netrw_dirhist_6='/run/media/pratheek/Transcend/cprgs'
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/home/pratheek/.vim/bundle'
+let g:netrw_dirhist_2='/home/pratheek/.vim/bundle/vim-powerline'
+let g:netrw_dirhist_3='/home/pratheek/.vim/bundle/vim-powerline/doc'
