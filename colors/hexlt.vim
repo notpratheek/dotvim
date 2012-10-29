@@ -18,6 +18,7 @@ hi Normal guifg=#262626 guibg=#dadada gui=none
 " --------------------------------------------------------------------
 " Languages Stuff
 
+hi Title         guifg=#094959 guibg=NONE    gui=NONE
 hi Comment       guifg=#60bdf4 guibg=NONE    gui=NONE     
 hi Constant      guifg=#0000d7 guibg=NONE    gui=NONE        
 hi String        guifg=#008700 guibg=NONE    gui=NONE      
