@@ -2,6 +2,11 @@ set nocompatible
 
 call pathogen#infect()
 
+set laststatus=2 
+let g:Powerline_symbols = 'fancy'
+
+set encoding=utf-8
+
 set t_Co=256
 set number
 set ai
@@ -9,7 +14,7 @@ set si
 syntax on
 filetype indent plugin on
 syntax enable
-set background=light
+set background=dark
 set guifont=Menlo\ for\ Powerline\ 13
 set guioptions-=T "removes toolbar
 set guioptions-=r "removes right scroll bar
@@ -28,14 +33,14 @@ else
     colorscheme LightTwist
 endif
 
-set statusline=
-set statusline+=(%t)\ 
-set statusline+=%m\ 
-set statusline+=%=\ 
-set statusline+=%r\ 
-set statusline+=%Y\ 
-set statusline+=(%l/%L)\ 
-set statusline+=(%p%%)\ 
+" set statusline=
+" set statusline+=(%t)\ 
+" set statusline+=%m\ 
+" set statusline+=%=\ 
+" set statusline+=%r\ 
+" set statusline+=%Y\ 
+" set statusline+=(%l/%L)\ 
+" set statusline+=(%p%%)\ 
 
 set tabstop=8
 set expandtab
@@ -55,11 +60,6 @@ let g:SuperTabDefaultCompletionType = "<c-p>"
 let python_highlight_all = 1
 au FileType python syn keyword pythonDecorator True None False self
 
-set nocompatible 
-set laststatus=2 
-set encoding=utf-8
-
-let g:Powerline_symbols = 'compatible'
 
 " Show syntax highlighting groups for word under cursor
 nmap <C-S-P> :call <SID>SynStack()<CR>
