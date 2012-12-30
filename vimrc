@@ -10,7 +10,7 @@ syntax on
 filetype indent plugin on
 syntax enable
 set background=light
-set guifont=Monaco\ for\ Powerline\ 13
+set guifont=Menlo\ for\ Powerline\ 13
 set guioptions-=T "removes toolbar
 set guioptions-=r "removes right scroll bar
 set guioptions-=m "removes menubar
