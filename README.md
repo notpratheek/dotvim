@@ -20,6 +20,13 @@ Then copy the url that you would use to clone a repo, and then
 
     git submodule add <The url of the repo> bundle/<repo's name>
 
---
+---
 
 For more help check this [vimcast](http://vimcasts.org/episodes/synchronizing-plugins-with-git-submodules-and-pathogen)
+
+--- 
+
+#### Also note to self ####
+
+    git st -> status -sbv
+    git lol -> log --oneline --graph --decorate --shortstat 
