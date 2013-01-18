@@ -14,7 +14,7 @@ set si
 syntax on
 filetype indent plugin on
 syntax enable
-set background=dark
+set background=light
 set guifont=Menlo\ for\ Powerline\ 13
 set guioptions-=T "removes toolbar
 set guioptions-=r "removes right scroll bar
