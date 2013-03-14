@@ -3,7 +3,7 @@ set nocompatible
 call pathogen#infect()
 
 set laststatus=2 
-let g:Powerline_symbols = 'fancy'
+let g:Powerline_symbols = 'compatible'
 
 set encoding=utf-8
 
@@ -15,7 +15,7 @@ syntax on
 filetype indent plugin on
 syntax enable
 set background=light
-set guifont=Menlo\ for\ Powerline\ 13
+set guifont=Inconsolata\ for\ Powerline\ 14
 set guioptions-=T "removes toolbar
 set guioptions-=r "removes right scroll bar
 set guioptions-=m "removes menubar
@@ -28,7 +28,7 @@ let g:indent_guides_guide_size = 1
 let g:indent_guides_enable_on_vim_startup = 1
 
 if has('gui_running')
-    colorscheme solarized
+    colorscheme hybrid
 else
     colorscheme LightTwist
 endif
