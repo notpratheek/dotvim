@@ -22,3 +22,12 @@
 [submodule "bundle/hybrid"]
 	path = bundle/hybrid
 	url = https://github.com/w0ng/vim-hybrid.git
+[submodule "bundle/neocomplcache"]
+	path = bundle/neocomplcache
+	url = https://github.com/Shougo/neocomplcache.git
+[submodule "bundle/supertab"]
+	path = bundle/supertab
+	url = https://github.com/ervandew/supertab.git
+[submodule "bundle/rest"]
+	path = bundle/rest
+	url = https://github.com/Rykka/riv.vim.git
