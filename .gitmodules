@@ -31,3 +31,6 @@
 [submodule "bundle/rest"]
 	path = bundle/rest
 	url = https://github.com/Rykka/riv.vim.git
+[submodule "bundle/indent-guides"]
+	path = bundle/indent-guides
+	url = git://github.com/nathanaelkane/vim-indent-guides.git
