@@ -1,6 +1,6 @@
 set nocompatible
 
-call pathogen#infect()
+execute pathogen#infect()
 
 set laststatus=2 
 let g:Powerline_symbols = 'compatible'
