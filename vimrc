@@ -1,3 +1,5 @@
+" I promise to clean up my vimrc one day !
+
 set nocompatible
 
 execute pathogen#infect()
@@ -50,6 +52,9 @@ filetype indent on
 
 set foldmethod=indent
 set foldlevel=99
+
+" Better <C-^> hack !
+:nnoremap <C-^> :buffers<CR>:b<Space>
 
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class 
