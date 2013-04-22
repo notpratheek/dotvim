@@ -6,6 +6,10 @@ execute pathogen#infect()
 
 set laststatus=2 
 let g:Powerline_symbols = 'compatible'
+" let g:Powerline_symbols = 'fancy'
+
+" Short one looks better !
+let g:Powerline_theme='short'
 
 set encoding=utf-8
 
