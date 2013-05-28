@@ -67,10 +67,10 @@ hi SpellRare     guifg=#ff0000 guibg=#ffff9a gui=NONE
 hi SpellLocal    guifg=#008b00 guibg=#ffff9a gui=NONE
 hi StatusLine    guifg=#000000 guibg=#8d8d8d gui=NONE
 hi StatusLineNC  guifg=#ffffff guibg=#b3b3b3 gui=NONE
-hi Pmenu         guifg=#586e75 guibg=#002b36 gui=NONE
-hi PmenuSel      guifg=#cb4b16 guibg=#002b36 gui=NONE
-hi PmenuSbar     guifg=#002b36 guibg=#002b36 gui=NONE
-hi PmenuThumb    guifg=#002b36 guibg=#002b36 gui=NONE
+hi Pmenu         guifg=#586e75 guibg=#fdf6e3 gui=NONE
+hi PmenuSel      guifg=#fdf6e3 guibg=#2aa198 gui=NONE
+hi PmenuSbar     guifg=#fdf6e3 guibg=#fdf6e3 gui=NONE
+hi PmenuThumb    guifg=#fdf6e3 guibg=#fdf6e3 gui=NONE
 hi MatchParen    guifg=#000000 guibg=#ff4040 gui=NONE
 hi CursorLine    guifg=NONE    guibg=#cecece gui=NONE
 hi CursorColumn  guifg=NONE    guibg=#a4c639 gui=NONE
