@@ -23,7 +23,10 @@ syntax enable
 set background=light
 set guifont=Monaco\ for\ Powerline\ 13
 set guioptions-=T "removes toolbar
-set guioptions-=lrb "removes left, right, bottom(for :sp) scroll bar
+set guioptions-=r "removes left, right, bottom(for :sp) scroll bar
+set guioptions-=R "removes left, right, bottom(for :sp) scroll bar
+set guioptions-=l "removes left, right, bottom(for :sp) scroll bar
+set guioptions-=L "removes left, right, bottom(for :sp) scroll bar
 set guioptions-=m "removes menubar
 set hlsearch
 set wildmenu
