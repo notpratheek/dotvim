@@ -16,7 +16,7 @@ syntax on
 filetype indent plugin on
 syntax enable
 set background=light
-set guifont=Monaco\ for\ Powerline\ 13
+set guifont=Menlo\ for\ Powerline\ 13
 set guioptions-=T "removes toolbar
 set guioptions-=r "removes left, right, bottom(for :sp) scroll bar
 set guioptions-=R "removes left, right, bottom(for :sp) scroll bar
@@ -34,7 +34,7 @@ let g:indent_guides_enable_on_vim_startup = 1
 if has('gui_running')
     colorscheme luna
 else
-    colorscheme LightTwist
+    colorscheme luna-term
 endif
 
 set statusline=
