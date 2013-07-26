@@ -12,6 +12,8 @@ set t_Co=256
 set number
 set ai
 set si
+set incsearch
+nmap / /\v
 syntax on
 filetype indent plugin on
 syntax enable
@@ -28,8 +30,12 @@ set wildmenu
 set colorcolumn=80
 set cursorline
 
+let g:airline_powerline_fonts = 1
+let g:airline_theme = 'luna'
+
+
 let g:indent_guides_guide_size = 1
-let g:indent_guides_enable_on_vim_startup = 1
+" let g:indent_guides_enable_on_vim_startup = 1
 
 if has('gui_running')
     colorscheme luna
@@ -37,16 +43,17 @@ else
     colorscheme luna-term
 endif
 
-set statusline=
-set statusline+=(%t)
-set statusline+=%m\ 
-set statusline+=%=\ 
-set statusline+=%r\ 
-set statusline+=%{fugitive#statusline()}
-set statusline+=%=\ 
-set statusline+=%Y\ 
-set statusline+=(%l/%L)\ 
-set statusline+=(%p%%)\ 
+
+" set statusline=
+" set statusline+=(%t)
+" set statusline+=%m\
+" set statusline+=%=\
+" set statusline+=%r\
+" set statusline+=%{fugitive#statusline()}
+" set statusline+=%=\
+" set statusline+=%Y\
+" set statusline+=(%l/%L)\
+" set statusline+=(%p%%)\
 
 set tabstop=8
 set expandtab
