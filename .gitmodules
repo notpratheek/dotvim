@@ -28,6 +28,3 @@
 [submodule "bundle/vim-luna"]
 	path = bundle/vim-luna
 	url = git://github.com/Pychimp/vim-luna.git
-[submodule "bundle/airline"]
-	path = bundle/airline
-	url = https://github.com/bling/vim-airline.git
