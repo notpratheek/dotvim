@@ -18,7 +18,8 @@ syntax on
 filetype indent plugin on
 syntax enable
 set background=light
-set guifont=Menlo\ for\ Powerline\ 13
+" set guifont=Menlo\ for\ Powerline\ 13
+set guifont=Monaco\ for\ Powerline\ 13
 set guioptions-=T "removes toolbar
 set guioptions-=r "removes left, right, bottom(for :sp) scroll bar
 set guioptions-=R "removes left, right, bottom(for :sp) scroll bar
