@@ -4,7 +4,7 @@ set nocompatible
 
 execute pathogen#infect()
 
-set laststatus=2 
+set laststatus=2
 
 set encoding=utf-8
 
@@ -59,7 +59,7 @@ endif
 set tabstop=8
 set expandtab
 set softtabstop=4
-set shiftwidth=4    
+set shiftwidth=4
 filetype indent on
 
 set foldmethod=indent
@@ -69,7 +69,7 @@ set foldlevel=99
 :nnoremap <C-^> :buffers<CR>:b<Space>
 
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
-autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class 
+autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 
 au FileType python set omnifunc=pythoncomplete#Complete
 let g:SuperTabDefaultCompletionType = "<c-p>"
@@ -87,13 +87,13 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
-" Key mapping for tab switching 
+" Key mapping for tab switching
 :nmap <C-t> :tabnew<CR>
 :map <C-x> :tabclose<CR>
 :map <C-h> :tabprevious<CR>
-:map <C-l> :tabnext<CR> 
+:map <C-l> :tabnext<CR>
 
-" Returns cursor to last position before quitting 
+" Returns cursor to last position before quitting
 augroup line_return
     au!
     au BufReadPost *
@@ -102,7 +102,7 @@ augroup line_return
         \ endif
 augroup END
 
-" Nyan cat 
+" Nyan cat
 function! NyanMe() " {{{
     hi NyanFur guifg=#BBBBBB
     hi NyanPoptartEdge guifg=#ffd0ac
@@ -217,3 +217,8 @@ function! NyanMe() " {{{
     redraw
 endfunction " }}}
 command! NyanMe call NyanMe()
+
+
+" unicode symbols
+let g:airline_branch_prefix = '⎇  '
+let g:airline_paste_symbol = 'ρ'
