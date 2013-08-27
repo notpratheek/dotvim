@@ -68,6 +68,9 @@ set foldlevel=99
 " Better <C-^> hack !
 :nnoremap <C-^> :buffers<CR>:b<Space>
 
+" Damn the <leader>r in python-mode for python3 
+:nnoremap <F5> :<C-u> ! python3 %<CR>
+
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 
