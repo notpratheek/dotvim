@@ -245,3 +245,6 @@ let g:airline_mode_map = {
     \ 'S'  : 'S',
     \ '' : 'S',
     \ }
+
+let g:startify_bookmarks = [ '~/.vimrc' ]
+let g:startify_files_number = 12
