@@ -34,7 +34,8 @@ set cursorline
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'luna'
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#fnamemod = ':~:.'
+" let g:airline#extensions#tabline#fnamemod = ':t:~'
 " let g:airline#extensions#tabline#fnamemod = ':p:~'
 
 let g:indent_guides_guide_size = 1
@@ -71,7 +72,7 @@ set foldlevel=99
 " :nnoremap <C-^> :buffers<CR>:b<Space>
 
 " using tabline (built-in with airline)
-nnoremap <C-Tab> :bnext<CR>
+nnoremap <C-Tab> :tabnext<CR>
 
 " Damn the <leader>r in python-mode for python3
 nnoremap <F5> :<C-u> ! python3 %<CR>
@@ -246,5 +247,40 @@ let g:airline_mode_map = {
     \ '' : 'S',
     \ }
 
+"function! AirlineInit()
+"    let g:airline_section_a = airline#section#create(['mode'])
+"    let g:airline_section_b = airline#section#create_left(['hunks'])
+"    let g:airline_section_c = airline#section#create(['%f'])
+"    let g:airline_section_y = airline#section#create_right(['branch', 'ffenc'])
+"endfunction
+"autocmd VimEnter * call AirlineInit()
+
 let g:startify_bookmarks = [ '~/.vimrc' ]
 let g:startify_files_number = 12
+let g:startify_change_to_dir = 0
+let g:startify_change_to_vcs_root = 1
+let g:startify_skiplist = [
+                \ '.git/COMMIT_EDITMSG',
+                \ '.gtkrc-2.0',
+                \ '/usr/share/vim/vim74/doc'
+                \ ]
+
+
+"let g:startify_custom_header = [
+            "\ '  .____---^^     ^^---____.                                                      ',
+            "\ '  TI      *       *      IT  Three Rings for the Elvin-Kings under the sky.      ',
+            "\ '  !I          *          I!  Seven for the DwarfLords in their halls of stone.   ',
+            "\ '   X                     X       Nine for the Mortal Men doomed to die.          ',
+            "\ '   XL                   JX       One for the Dark Lord on his dark throne.       ',
+            "\ '   II        / \        II   In the Land of Mordor where the Shadow Lies.        ',
+            "\ '   II   / \ /   \ / \   II                                                       ',
+            "\ '    X  /   v     v   \  X       One Ring to rule them all,One Ring to find them, ',
+            "\ '    ``/    _     _    \''     One Ring to bring them all and in the Darkness     ',
+            "\ '     \\- _-_ -_- _-_ -//         Bind Them                                       ',
+            "\ '       \\_-  -_-  -_//          In the Land of Mordor where the Shadows Lie.     ',
+            "\ '         ``       ''                                                             ',
+            "\ '           ``-_-''                                                               ',
+            "\ '                                                    "Lord Of THe Rings"          ',
+            "\ '                                                          by J.R.R. Tolkien      ',
+            "\ '',
+            "\ ]
