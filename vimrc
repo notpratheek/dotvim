@@ -33,7 +33,9 @@ set cursorline
 
 let g:airline_powerline_fonts = 1
 let g:airline_theme = 'luna'
-
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
+" let g:airline#extensions#tabline#fnamemod = ':p:~'
 
 let g:indent_guides_guide_size = 1
 " let g:indent_guides_enable_on_vim_startup = 1
@@ -66,10 +68,13 @@ set foldmethod=indent
 set foldlevel=99
 
 " Better <C-^> hack !
-:nnoremap <C-^> :buffers<CR>:b<Space>
+" :nnoremap <C-^> :buffers<CR>:b<Space>
 
-" Damn the <leader>r in python-mode for python3 
-:nnoremap <F5> :<C-u> ! python3 %<CR>
+" using tabline (built-in with airline)
+nnoremap <C-Tab> :bnext<CR>
+
+" Damn the <leader>r in python-mode for python3
+nnoremap <F5> :<C-u> ! python3 %<CR>
 
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
@@ -225,3 +230,18 @@ command! NyanMe call NyanMe()
 " unicode symbols
 let g:airline_branch_prefix = '⎇  '
 let g:airline_paste_symbol = 'ρ'
+
+" Reducing mode strings to a single chars
+let g:airline_mode_map = {
+    \ '__' : '-',
+    \ 'n'  : 'N',
+    \ 'i'  : 'I',
+    \ 'R'  : 'R',
+    \ 'c'  : 'C',
+    \ 'v'  : 'V',
+    \ 'V'  : 'V',
+    \ '' : 'V',
+    \ 's'  : 'S',
+    \ 'S'  : 'S',
+    \ '' : 'S',
+    \ }
