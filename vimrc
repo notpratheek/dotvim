@@ -247,13 +247,13 @@ let g:airline_mode_map = {
     \ '' : 'S',
     \ }
 
-"function! AirlineInit()
-"    let g:airline_section_a = airline#section#create(['mode'])
-"    let g:airline_section_b = airline#section#create_left(['hunks'])
-"    let g:airline_section_c = airline#section#create(['%f'])
-"    let g:airline_section_y = airline#section#create_right(['branch', 'ffenc'])
-"endfunction
-"autocmd VimEnter * call AirlineInit()
+function! AirlineInit()
+    let g:airline_section_a = airline#section#create(['mode'])
+    let g:airline_section_b = airline#section#create_left(['hunks'])
+    let g:airline_section_c = airline#section#create(['%f'])
+    let g:airline_section_y = airline#section#create_right(['branch', 'ffenc'])
+endfunction
+autocmd VimEnter * call AirlineInit()
 
 let g:startify_bookmarks = [ '~/.vimrc' ]
 let g:startify_files_number = 12
