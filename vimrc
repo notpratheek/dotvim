@@ -77,6 +77,9 @@ nnoremap <C-Tab> :tabnext<CR>
 " Damn the <leader>r in python-mode for python3
 nnoremap <F5> :<C-u> ! python3 %<CR>
 
+" clear serached stuff
+nnoremap <C-S-c> :let @/=''<CR>
+
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 
@@ -97,10 +100,10 @@ function! <SID>SynStack()
 endfunc
 
 " Key mapping for tab switching
-:nmap <C-t> :tabnew<CR>
-:map <C-x> :tabclose<CR>
-:map <C-h> :tabprevious<CR>
-:map <C-l> :tabnext<CR>
+nnoremap <C-t> :tabnew<CR>
+" :map <C-x> :tabclose<CR>
+" :map <C-h> :tabprevious<CR>
+nnoremap <C-Tab> :tabnext<CR>
 
 " Returns cursor to last position before quitting
 augroup line_return
