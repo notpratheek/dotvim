@@ -34,3 +34,9 @@
 [submodule "bundle/signify"]
 	path = bundle/signify
 	url = https://github.com/mhinz/vim-signify.git
+[submodule "bundle/luna"]
+	path = bundle/luna
+	url = https://github.com/Pychimp/vim-luna.git
+[submodule "bundle/sol"]
+	path = bundle/sol
+	url = https://github.com/Pychimp/vim-sol.git
