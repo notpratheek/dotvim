@@ -32,7 +32,7 @@ set colorcolumn=80
 set cursorline
 
 let g:airline_powerline_fonts = 1
-let g:airline_theme = 'luna'
+let g:airline_theme = 'sol'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':~:.'
 " let g:airline#extensions#tabline#fnamemod = ':t:~'
@@ -42,9 +42,9 @@ let g:indent_guides_guide_size = 1
 " let g:indent_guides_enable_on_vim_startup = 1
 
 if has('gui_running')
-    colorscheme luna
+    colorscheme sol
 else
-    colorscheme luna-term
+    colorscheme sol-term
 endif
 
 
