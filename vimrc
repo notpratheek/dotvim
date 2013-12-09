@@ -272,8 +272,10 @@ function! AirlineInit()
 endfunction
 autocmd VimEnter * call AirlineInit()
 
-let g:startify_bookmarks = [ '~/.vimrc' ]
-let g:startify_files_number = 12
+let g:startify_bookmarks = [
+            \ '~/.vim/vimrc',
+            \ ]
+let g:startify_files_number = 9
 let g:startify_change_to_dir = 0
 let g:startify_change_to_vcs_root = 1
 let g:startify_skiplist = [
@@ -281,6 +283,17 @@ let g:startify_skiplist = [
                 \ '.gtkrc-2.0',
                 \ '/usr/share/vim/vim74/doc'
                 \ ]
+
+
+let g:startify_list_order = [
+      \ ['   Recently Opened:'],
+      \ 'files',
+      \ ['   Sessions:'],
+      \ 'sessions',
+      \ ['   Bookmarks:'],
+      \ 'bookmarks',
+      \ ]
+
 
 
 "let g:startify_custom_header = [
