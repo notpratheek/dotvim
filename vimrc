@@ -1,11 +1,29 @@
+" vim:foldmethod=marker:foldlevel=0:textwidth=79
+"
 " I promise to clean up my vimrc one day !
 " Kepping up promise made in 9a59c443260aeb6ac64b7766fbe5cc4ad76f860a
 " vimrc
 " Author: Pratheek
 " My Vim settings.
+" _____________________
+"  Here be my Secrets
+" ---------------------
+"       o                    / \  //\
+"        o    |\___/|      /   \//  \\
+"             /0  0  \__  /    //  | \ \
+"            /     /  \/_/    //   |  \  \
+"            @_^_@'/   \/_   //    |   \   \
+"            //_^_/     \/_ //     |    \    \
+"         ( //) |        \///      |     \     \
+"       ( / /) _|_ /   )  //       |      \     _\
+"     ( // /) '/,_ _ _/  ( ; -.    |    _ _\.-~        .-~~~^-.
+"   (( / / )) ,-{        _      `-.|.-~-.           .~         `.
+"  (( // / ))  '/\      /                 ~-. _ .-~      .-~^-.  \
+"  (( /// ))      `.   {            }                   /      \  \
+"   (( / ))     .----~-.\        \-'                 .~         \  `. \^-.
+"              ///.----..>        \             _ -~             `.  ^-`  ^-_
+"                ///-._ _ _ _ _ _ _}^ - - - - ~                     ~-- ,.-~
 "
-" vim:foldmethod=marker:foldlevel=0:textwidth=79
-
 "
 " Preamble ---------------------------------------------------------------- {{{
 
@@ -148,7 +166,7 @@ nnoremap :e :CtrlPMRUFiles<CR>
 nnoremap <C-S-c> :let @/=""<CR>
 " ---------------------------------------------------------------------------
 " Show syntax highlighting groups for word under cursor
-" Thanks to Drew Niel from vimcasts
+" Thanks to Drew Neil from vimcasts
 nmap <A-S-P> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
   if !exists("*synstack")
