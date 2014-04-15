@@ -545,12 +545,12 @@ let g:startify_skiplist = [
                 \ ]
 
 let g:startify_list_order = [
-      \ ['   Recently Opened:'],
+      \ ['   MRU:'],
       \ 'files',
-      \ ['   Sessions:'],
+      \ ['   Sess:'],
       \ 'sessions',
-      \ ['   Bookmarks:'],
-      \ 'bookmarks',
+      \ ['   Markers:'],
+      \ 'bookmarks'
       \ ]
 " Startify Custom Header
 "let g:startify_custom_header = [
