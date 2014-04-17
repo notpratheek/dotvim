@@ -576,6 +576,8 @@ let g:startify_list_order = [
 
 " make CtrlP exclude these type of files from adding to MRUFiles cache
 let g:ctrlp_mruf_exclude = '*.tar.gz\|'
+let g:ctrlp_clear_cache_on_exit = 1
+let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
 " }}}
 " SuperTab {{{
 
