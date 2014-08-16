@@ -48,7 +48,7 @@ set background=light
 
 " Have a different colorscheme for GUI and console version of Vim
 if has('gui_running')
-    colorscheme sol
+    colorscheme luna
 else
     colorscheme luna-term
 endif
@@ -136,10 +136,10 @@ nnoremap <up> <nop>
 nnoremap <down> <nop>
 nnoremap <left> <nop>
 nnoremap <right> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
+" inoremap <up> <nop>
+" inoremap <down> <nop>
+" inoremap <left> <nop>
+" inoremap <right> <nop>
 vnoremap <up> <nop>
 vnoremap <down> <nop>
 vnoremap <left> <nop>
@@ -468,7 +468,7 @@ endfunction " }}}
 " }}}
 " Plugin Settings --------------------------------------------------------- {{{
 " Airline {{{
-let g:airline_theme = 'sol'
+let g:airline_theme = 'luna'
 let g:airline_left_sep=''
 let g:airline_left_alt_sep='|'
 let g:airline_right_sep=''
