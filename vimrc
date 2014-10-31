@@ -523,7 +523,9 @@ function! AirlineInit()
     let g:airline_section_a = airline#section#create(['mode'])
     let g:airline_section_b = airline#section#create_left(['hunks'])
     let g:airline_section_c = airline#section#create(['%f'])
+    let g:airline_section_x = airline#section#create(['%{toupper(strpart(&filetype,0,1)) . strpart(&filetype,1)}'])
     let g:airline_section_y = airline#section#create_right(['branch', 'ffenc'])
+    let g:airline_section_z = airline#section#create_right(['(%l/%c) [%p%%]'])
 endfunction
 autocmd VimEnter * call AirlineInit()
 " }}}
