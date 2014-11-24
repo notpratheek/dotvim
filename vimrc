@@ -73,7 +73,8 @@ set guifont=Monaco\ for\ Powerline\ 13
 
 set hlsearch
 set wildmenu
-set colorcolumn=80
+" set colorcolumn=80
+call matchadd('ColorColumn', '\%81v', 100)
 set cursorline
 set tabstop=8
 set expandtab
@@ -95,6 +96,10 @@ set lazyredraw
 " This is especially usefull for `:vertical h <topic>`
 set nowrap
 
+" case insensitive commands
+" Eg -- :start<Tab> ==> :Startify
+set ignorecase smartcase
+
 " Amount of time taken to show the matching paren
 " (This is in tenths of a sec)
 set matchtime=3
@@ -107,12 +112,9 @@ set completeopt=longest,menuone,preview,menu
 
 " I think all these guioptions should be in gvimrc,
 " but since vimrc loads faster, I've added them here
-set guioptions-=T "removes toolbar
-set guioptions-=r "removes Right-hand scrollbar
-set guioptions-=R "removes Right-hand scrollbar (Which is present in :vsp)
-set guioptions-=l "removes Left-hand scrollbar
-set guioptions-=L "removes Left-hand scrollbar (which is present in :vsp)
-set guioptions-=m "removes menubar
+
+" Empty string = No GUI features !
+set guioptions=
 
 " Defualt Status line
 " Commented out all these, in favour of vim-airline
@@ -468,7 +470,7 @@ endfunction " }}}
 " }}}
 " Plugin Settings --------------------------------------------------------- {{{
 " Airline {{{
-let g:airline_theme = 'luna'
+let g:airline_theme = 'raven'
 let g:airline_left_sep=''
 let g:airline_left_alt_sep='|'
 let g:airline_right_sep=''
@@ -587,6 +589,66 @@ let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
 let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:SuperTabLongestHighlight = 1
 let g:SuperTabCrMapping = 1
+" }}}
+" Rainbow Parentheses{{{
+"
+" let g:rbpt_colorpairs = [
+"     \ ['brown',       '#EE2E24'],
+"     \ ['Darkblue',    '#98005D'],
+"     \ ['darkgray',    '#FFD204'],
+"     \ ['darkgreen',   '#00853E'],
+"     \ ['darkcyan',    '#85C3BC'],
+"     \ ['darkred',     '#009DDC'],
+"     \ ['darkmagenta', '#F386A1'],
+"     \ ['brown',       '#B06110'],
+"     \ ['gray',        '#EE2E24'],
+"     \ ['black',       '#98005D'],
+"     \ ['darkmagenta', '#FFD204'],
+"     \ ['Darkblue',    '#00853E'],
+"     \ ['darkgreen',   '#85C3BC'],
+"     \ ['darkcyan',    '#009DDC'],
+"     \ ['darkred',     '#F386A1'],
+"     \ ['red',         '#B06110'],
+"     \ ]
+
+" let g:rbpt_colorpairs = [
+"     \ ['brown',       '#FB9FB1'],
+"     \ ['Darkblue',    '#EDA987'],
+"     \ ['darkgray',    '#DDB26F'],
+"     \ ['darkgreen',   '#ACC267'],
+"     \ ['darkcyan',    '#12CFC0'],
+"     \ ['darkred',     '#6FC2EF'],
+"     \ ['darkmagenta', '#E1A3EE'],
+"     \ ['brown',       '#DEAF8F'],
+"     \ ['gray',        '#FB9FB1'],
+"     \ ['black',       '#EDA987'],
+"     \ ['darkmagenta', '#DDB26F'],
+"     \ ['Darkblue',    '#ACC267'],
+"     \ ['darkgreen',   '#12CFC0'],
+"     \ ['darkcyan',    '#6FC2EF'],
+"     \ ['darkred',     '#E1A3EE'],
+"     \ ['red',         '#DEAF8F'],
+"     \ ]
+
+let g:rbpt_colorpairs = [
+    \ ['brown',       '#AC4142'],
+    \ ['Darkblue',    '#D28445'],
+    \ ['darkgray',    '#F4BF75'],
+    \ ['darkgreen',   '#90A959'],
+    \ ['darkcyan',    '#75B5AA'],
+    \ ['darkred',     '#6A9FB5'],
+    \ ['darkmagenta', '#AA759F'],
+    \ ['brown',       '#8F5536'],
+    \ ['gray',        '#AC4142'],
+    \ ['black',       '#D28445'],
+    \ ['darkmagenta', '#F4BF75'],
+    \ ['Darkblue',    '#90A959'],
+    \ ['darkgreen',   '#75B5AA'],
+    \ ['darkcyan',    '#6A9FB5'],
+    \ ['darkred',     '#AA759F'],
+    \ ['red',         '#8F5536'],
+    \ ]
+
 " }}}
 " Indent Guides {{{
 
