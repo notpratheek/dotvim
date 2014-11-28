@@ -472,9 +472,9 @@ endfunction " }}}
 " Airline {{{
 let g:airline_theme = 'raven'
 let g:airline_left_sep=''
-let g:airline_left_alt_sep='|'
+let g:airline_left_alt_sep=''
 let g:airline_right_sep=''
-let g:airline_right_alt_sep='|'
+let g:airline_right_alt_sep=''
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':~:.'
@@ -533,6 +533,7 @@ autocmd VimEnter * call AirlineInit()
 " }}}
 " Startify {{{
 
+let g:startify_custom_indices = map(range(1,100), 'string(v:val)')
 let g:startify_bookmarks = [
             \ '~/.vim/vimrc',
             \ ]
