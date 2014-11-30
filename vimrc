@@ -323,6 +323,8 @@ au FileType clojure RainbowParenthesesActivate
 au syntax clojure RainbowParenthesesLoadRound
 au syntax clojure RainbowParenthesesLoadSquare
 au syntax clojure RainbowParenthesesLoadBraces
+au syntax clojure setlocal omnifunc=clojurecomplete#Complete
+au syntax clojure setlocal completefunc=clojurecomplete#Complete
 " ---------------------------------------------------------------------------
 " }}}
 " Python {{{
@@ -580,9 +582,11 @@ let g:startify_list_order = [
 " CtrlP {{{
 
 " make CtrlP exclude these type of files from adding to MRUFiles cache
-let g:ctrlp_mruf_exclude = '*.tar.gz\|'
-let g:ctrlp_clear_cache_on_exit = 1
+let g:ctrlp_custom_ignore = 'bin'
+let g:ctrlp_mruf_exclude = '*.tar.gz\|bin|'
+let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
+let g:ctrlp_show_hidden = 1
 " }}}
 " SuperTab {{{
 
