@@ -69,7 +69,8 @@ set listchars=tab:›∙,eol:¬
 
 " Can *NEVER* settle with one font ! :D
 " set guifont=Menlo\ for\ Powerline\ 13
-set guifont=Monaco\ for\ Powerline\ 13
+" set guifont=Monaco\ for\ Powerline\ 13
+set guifont=Inconsolata\ Medium\ 17
 
 set hlsearch
 set wildmenu
@@ -319,10 +320,6 @@ au Filetype * inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<
 " }}}
 " Clojure {{{
 " ---------------------------------------------------------------------------
-au FileType clojure RainbowParenthesesActivate
-au syntax clojure RainbowParenthesesLoadRound
-au syntax clojure RainbowParenthesesLoadSquare
-au syntax clojure RainbowParenthesesLoadBraces
 au syntax clojure setlocal omnifunc=clojurecomplete#Complete
 au syntax clojure setlocal completefunc=clojurecomplete#Complete
 " ---------------------------------------------------------------------------
