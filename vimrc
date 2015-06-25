@@ -499,8 +499,11 @@ let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#buffer_min_count = 2
 
 " unicode symbols
-let g:airline_branch_prefix = 'Br:'
-let g:airline_paste_symbol = 'ρ'
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+let g:airline_symbols.branch = 'Br:'
 
 " Reducing mode strings to a single chars
 let g:airline_mode_map = {
@@ -535,6 +538,8 @@ autocmd VimEnter * call AirlineInit()
 let g:startify_custom_indices = map(range(1,100), 'string(v:val)')
 let g:startify_bookmarks = [
             \ '~/.vim/vimrc',
+            \ '~/.i3/config',
+            \ '~/.i3/status.conf'
             \ ]
 let g:startify_files_number = 8
 let g:startify_change_to_dir = 0
@@ -656,6 +661,20 @@ let g:rbpt_colorpairs = [
 
 let g:indent_guides_guide_size = 1
 " let g:indent_guides_enable_on_vim_startup = 1
+" }}}
+" Golang {{{
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+
+" Automatically insert imports on save
+let g:go_fmt_command = "goimports"
+
+" fmt on save
+let g:go_fmt_autosave = 1
+
 " }}}
 " ---------------------------------------------------------------------------
 "}}}
