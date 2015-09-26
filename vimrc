@@ -61,7 +61,8 @@ endif
 set laststatus=2
 set encoding=utf-8
 set t_Co=256
-set relativenumber
+" set relativenumber
+set number
 set autoindent
 set smartindent
 set incsearch
@@ -70,7 +71,9 @@ set listchars=tab:›∙,eol:¬
 " Can *NEVER* settle with one font ! :D
 " set guifont=Menlo\ for\ Powerline\ 13
 " set guifont=Monaco\ for\ Powerline\ 13
-set guifont=Inconsolata\ Medium\ 17
+" set guifont=Inconsolata\ Medium\ 17
+" set guifont=Source\ Code\ Pro\ 15
+set guifont=DejaVu\ Sans\ Mono\ 15
 
 set hlsearch
 set wildmenu
