@@ -43,3 +43,6 @@
 [submodule "bundle/sol"]
 	path = bundle/sol
 	url = https://github.com/notpratheek/vim-sol.git
+[submodule "bundle/vim-go"]
+	path = bundle/vim-go
+	url = https://github.com/fatih/vim-go.git
