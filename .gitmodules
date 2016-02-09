@@ -28,15 +28,6 @@
 [submodule "bundle/vinegar"]
 	path = bundle/vinegar
 	url = https://github.com/tpope/vim-vinegar.git
-[submodule "bundle/redl"]
-	path = bundle/redl
-	url = git://github.com/dgrnbrg/vim-redl.git
-[submodule "bundle/fireplace"]
-	path = bundle/fireplace
-	url = git://github.com/tpope/vim-fireplace.git
-[submodule "bundle/classpath"]
-	path = bundle/classpath
-	url = https://github.com/tpope/vim-classpath.git
 [submodule "bundle/gundo"]
 	path = bundle/gundo
 	url = https://github.com/sjl/gundo.vim.git
