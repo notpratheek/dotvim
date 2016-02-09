@@ -37,3 +37,6 @@
 [submodule "bundle/autoclose"]
 	path = bundle/autoclose
 	url = https://github.com/adelarsq/Vim-Autoclose.git
+[submodule "bundle/luna"]
+	path = bundle/luna
+	url = https://github.com/notpratheek/vim-luna.git
