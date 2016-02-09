@@ -40,3 +40,6 @@
 [submodule "bundle/luna"]
 	path = bundle/luna
 	url = https://github.com/notpratheek/vim-luna.git
+[submodule "bundle/sol"]
+	path = bundle/sol
+	url = https://github.com/notpratheek/vim-sol.git
