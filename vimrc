@@ -26,34 +26,42 @@
 "
 "
 " Preamble ---------------------------------------------------------------- {{{
-
+"
 " No explanation needed
 set nocompatible
-
 " Load pathogen, and automatically call pathogen#helptags()
 execute pathogen#infect()
 call pathogen#helptags()
 set shell=/bin/bash
-"}}}
-" Basic settings----------------------------------------------------------- {{{
+" }}}
+" Basic settings ---------------------------------------------------------- {{{
 "
 " Better than just /<search term>
 " Also, `\v` enables use of Perl compatible regexes
 nmap / /\v
 syntax on
+" enable loading the indent file for specific file types
 filetype indent on
+" enable loading the plugin files for specific file types
 filetype plugin on
+" switch on syntax highlighting
 syntax enable
+" set a light background
 set background=light
 
 " Have a different colorscheme for GUI and console version of Vim
 if has('gui_running')
-    colorscheme luna
+    colorscheme sol
 else
     colorscheme luna-term
 endif
 
-" Set stuff (set <whatever>) {{{
+" Use ag over grep
+set grepprg=ag\ --nogroup\ --nocolor
+" ---------------------------------------------------------------------------
+" }}}
+" Set stuff (set <whatever>) ---------------------------------------------- {{{
+"
 " I'm going to try to put a comment above most of these `set` stuff,
 " but if its not present, just do a `:h` for that
 
@@ -74,6 +82,7 @@ set listchars=tab:›∙,eol:¬
 " set guifont=Inconsolata\ Medium\ 17
 " set guifont=Source\ Code\ Pro\ 15
 set guifont=DejaVu\ Sans\ Mono\ 15
+" set guifont=Fira\ Mono\ 15
 
 set hlsearch
 set wildmenu
@@ -120,46 +129,66 @@ set completeopt=longest,menuone,preview,menu
 " Empty string = No GUI features !
 set guioptions=
 
-" Defualt Status line
-" Commented out all these, in favour of vim-airline
-"
-" set statusline=
-" set statusline+=(%t)
-" set statusline+=%m\
-" set statusline+=%=\
-" set statusline+=%r\
-" set statusline+=%{fugitive#statusline()}
-" set statusline+=%=\
-" set statusline+=%Y\
-" set statusline+=(%l/%L)\
-" set statusline+=(%p%%)\
+" too many times :W ! Hence, the shortcut
+ca W w
+" set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}\ %=%-14.(%l,%c%V%)\ %P
 
+" Status line stuff {{{
+" Begin Status line
+set statusline=\ 
+" Show the mode
+set statusline+=%{toupper(mode())}\ 
+" Buffer count
+set statusline+=[%n]\ 
+" file name 
+" set statusline+=%{expand(%F)}\ 
+set statusline+=%F\ 
+" is file modified ?
+set statusline+=%m\ 
+" shift stuff to right
+set statusline+=%=\ 
+" is file READONLY
+set statusline+=%r\ 
+" Fugitive status
+set statusline+=%{fugitive#statusline()}\ 
+" more to right
+set statusline+=%=\ 
+" fancy file format
+set statusline+=%{toupper(strpart(&filetype,0,1)).strpart(&filetype,1)}\ 
+" (current line / total lines in file)
+set statusline+=(%l:%c/%L)\ 
+" percent position in the file
+set statusline+=(%3p%%)\ 
+" set statusline+=(%p%%)\ 
+"}}}
+" 
 " Use the custom fold function
+" (function is defined below)
 set foldtext=MyFoldText()
-"}}}
-" Breaking Habit {{{
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-nnoremap <left> <nop>
-nnoremap <right> <nop>
-" inoremap <up> <nop>
-" inoremap <down> <nop>
-" inoremap <left> <nop>
-" inoremap <right> <nop>
-vnoremap <up> <nop>
-vnoremap <down> <nop>
-vnoremap <left> <nop>
-vnoremap <right> <nop>
-"}}}
-" Mind Hacks {{{
 " ---------------------------------------------------------------------------
+"}}}
+" Breaking Habit ---------------------------------------------------------- {{{
+"
+"!-- nnoremap <up> <nop>
+"!-- nnoremap <down> <nop>
+"!-- nnoremap <left> <nop>
+"!-- nnoremap <right> <nop>
+"!-- " inoremap <up> <nop>
+"!-- " inoremap <down> <nop>
+"!-- " inoremap <left> <nop>
+"!-- " inoremap <right> <nop>
+"!-- vnoremap <up> <nop>
+"!-- vnoremap <down> <nop>
+"!-- vnoremap <left> <nop>
+"!-- vnoremap <right> <nop>
+" ---------------------------------------------------------------------------
+"}}}
+" Mind Hacks -------------------------------------------------------------- {{{
+"
 " Better <C-^> hack !
-" :nnoremap <C-^> :buffers<CR>:b<Space>
-" using tabline (built-in with airline)
-nnoremap <C-Tab> :tabnext<CR>
+nnoremap <C-Tab> :buffers<CR>:b<Space>
 " ---------------------------------------------------------------------------
-" with the default `:e` I'll have to remember
-" the path of the file (which is hard)
+" with the default `:e` I'll have to remember the path of the file (which is hard)
 " So, remap `:e` to run `:CtrlPMRUFiles`
 " Pros : No need to remember the path, CtrlP will find it for you.
 " Cons : Requires CtrlP (dependency) and
@@ -198,10 +227,10 @@ augroup line_return
 augroup END
 " ---------------------------------------------------------------------------
 " Key mapping for tab switching
-nnoremap <C-t> :tabnew<CR>
+""nnoremap <C-t> :tabnew<CR>
 " :map <C-x> :tabclose<CR>
 " :map <C-h> :tabprevious<CR>
-nnoremap <C-Tab> :tabnext<CR>
+""nnoremap <C-Tab> :tabnext<CR>
 " ---------------------------------------------------------------------------
 " Thanks to Steve Losh
 " "Uppercase word" mapping.
@@ -231,8 +260,16 @@ nnoremap <C-Tab> :tabnext<CR>
 inoremap <C-u> <esc>mzgUiw`za
 " ---------------------------------------------------------------------------
 "}}}
-" <F5> FileType Runners and Builders {{{
-" ---------------------------------------------------------------------------
+" <F5> FileType Runners and Builders -------------------------------------- {{{
+"
+" Go {{{
+augroup ft_go
+    au!
+    " Run the go program in the current buffer
+    " depends on fatih/vim-go
+    au Filetype go nnoremap <F5> :<C-u>GoRun<CR>
+augroup END
+"}}}
 " Python {{{
 augroup ft_python
     au!
@@ -288,10 +325,10 @@ augroup ft_cpp
     au Filetype cpp nnoremap <F5> :<C-u> ! g++ -Wall % -o %.oo<CR>
 augroup END
 " }}}
-" }}}
 " ---------------------------------------------------------------------------
 " }}}
 " Wild Ignore ------------------------------------------------------------- {{{
+"
 set wildignore+=.hg,.git,.svn                    " Version control
 set wildignore+=*.aux,*.out,*.toc                " LaTeX intermediate files
 set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
@@ -308,6 +345,7 @@ set wildignore+=**/doc/*.txt
 " Clojure/Leiningen
 set wildignore+=classes
 set wildignore+=lib
+" ---------------------------------------------------------------------------
 "}}}
 " Auto Commands ----------------------------------------------------------- {{{
 " General filetype {{{
@@ -322,23 +360,20 @@ au Filetype * inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<
 " ---------------------------------------------------------------------------
 " }}}
 " Clojure {{{
-" ---------------------------------------------------------------------------
 au syntax clojure setlocal omnifunc=clojurecomplete#Complete
 au syntax clojure setlocal completefunc=clojurecomplete#Complete
-" ---------------------------------------------------------------------------
 " }}}
 " Python {{{
-" ---------------------------------------------------------------------------
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 au FileType python set omnifunc=pythoncomplete#Complete
 au FileType python syn keyword pythonDecorator True None False self
-" ---------------------------------------------------------------------------
 " }}}
+" ---------------------------------------------------------------------------
 " }}}
 " Custom Functions -------------------------------------------------------- {{{
-" ---------------------------------------------------------------------------
-function! MyFoldText() " {{{
+" Customised Folding via a function {{{
+function! MyFoldText()
     let line = getline(v:foldstart)
 
     let nucolwidth = &fdc + &number * &numberwidth
@@ -352,11 +387,35 @@ function! MyFoldText() " {{{
     let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
     let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
     return line . ' (' . foldedlinecount . ') ' . '…' . repeat(" ",fillcharcount) .  ' '
-endfunction " }}}
-" Nyan cat
+endfunction
+" }}}
+" Template stuff {{{
+" http://got-ravings.blogspot.in/2008/08/vim-pr0n-simple-template-engine.html
+"
+" define the Template command
+command! -complete=customlist,AvailableTemplates -n=1 Template :call InsertTemplate('<args>')
+
+function! InsertTemplate(name)
+    " read a template
+    execute 'read ~/.vim/templates/' . &filetype . '/' . a:name
+    " if cursor was on a blankline, delete it
+    if getline(line(".")-1) =~ '^\s*$'
+        exec line(".")-1 . 'd'
+    endif
+endfunction
+
+function! AvailableTemplates(lead, cmdline, cursorpos)
+    let templateDir = expand('~/.vim/templates' . &filetype . '/')
+    let files = split(globpath(templateDir, a:lead . '*'), '\n')
+
+    return map(files, 'strpart(v:val,strlen(templateDir))')
+endfunction
+
+" }}}
+" Nyan cat {{{
 command! NyanMe call NyanMe()
 " ---------------------------------------------------------------------------
-function! NyanMe() " {{{
+function! NyanMe()
     hi NyanFur guifg=#BBBBBB
     hi NyanPoptartEdge guifg=#ffd0ac
     hi NyanPoptartFrosting guifg=#fd3699 guibg=#fe98ff
@@ -468,74 +527,11 @@ function! NyanMe() " {{{
     echo " "
     echo "Noms?"
     redraw
-endfunction " }}}
+endfunction
+" }}}
+" ---------------------------------------------------------------------------
 " }}}
 " Plugin Settings --------------------------------------------------------- {{{
-" Airline {{{
-let g:airline_theme = 'raven'
-let g:airline_left_sep=''
-let g:airline_left_alt_sep=''
-let g:airline_right_sep=''
-let g:airline_right_alt_sep=''
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':~:.'
-" let g:airline#extensions#tabline#fnamemod = ':t:~'
-" let g:airline#extensions#tabline#fnamemod = ':p:~'
-
-" Get rid of the arrows in tabline
-let g:airline#extensions#tabline#left_sep = ' '
-let g:airline#extensions#tabline#left_alt_sep = '|'
-
-" Enable Fugitive support in airline
-let g:airline#extensions#branch#enabled = 1
-
-" Show hunks, only if there is change in file,
-" with respect to the version last commited into git
-let g:airline#extensions#hunks#non_zero_only = 1
-
-" Display buffers in a single tab
-" (also this is required for the next setting)
-let g:airline#extensions#tabline#show_buffers = 1
-
-" Show tabline only if more than 2 buffers exist
-let g:airline#extensions#tabline#buffer_min_count = 2
-
-" unicode symbols
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-
-let g:airline_symbols.branch = 'Br:'
-
-" Reducing mode strings to a single chars
-let g:airline_mode_map = {
-    \ '__' : '-',
-    \ 'n'  : 'N',
-    \ 'i'  : 'I',
-    \ 'R'  : 'R',
-    \ 'c'  : 'C',
-    \ 'v'  : 'V',
-    \ 'V'  : 'V',
-    \ '' : 'V',
-    \ 's'  : 'S',
-    \ 'S'  : 'S',
-    \ '' : 'S',
-    \ }
-
-" Custom Function to display a slightly modified airline
-" Slight change to show branch info on the right side
-" rather than next to the hunks
-function! AirlineInit()
-    let g:airline_section_a = airline#section#create(['mode'])
-    let g:airline_section_b = airline#section#create_left(['hunks'])
-    let g:airline_section_c = airline#section#create(['%f'])
-    let g:airline_section_x = airline#section#create(['%{toupper(strpart(&filetype,0,1)) . strpart(&filetype,1)}'])
-    let g:airline_section_y = airline#section#create_right(['branch', 'ffenc'])
-    let g:airline_section_z = airline#section#create_right(['(%l/%c) [%p%%]'])
-endfunction
-autocmd VimEnter * call AirlineInit()
-" }}}
 " Startify {{{
 
 let g:startify_custom_indices = map(range(1,100), 'string(v:val)')
@@ -587,11 +583,26 @@ let g:startify_list_order = [
 " CtrlP {{{
 
 " make CtrlP exclude these type of files from adding to MRUFiles cache
-let g:ctrlp_custom_ignore = 'bin'
-let g:ctrlp_mruf_exclude = '*.tar.gz\|bin|'
+" let g:ctrlp_custom_ignore = '~/bin'
+
+  let g:ctrlp_custom_ignore = {
+    \ 'dir':  '\v[\/]\.(git|hg|svn|Torrents)$',
+    \ 'file': '\v\.(exe|so|dll|srt|txt|part)$',
+    \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
+    \ }
+let g:ctrlp_mruf_exclude = '*.tar.gz\|bin|.git|*.srt|*.part|*.txt'
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
 let g:ctrlp_show_hidden = 1
+
+" Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+" reuse startify window
+let g:ctrlp_reuse_window = 'startify'
+
+" ag is fast enough that CtrlP doesn't need to cache
+let g:ctrlp_use_caching = 0
 " }}}
 " SuperTab {{{
 
@@ -599,66 +610,6 @@ let g:ctrlp_show_hidden = 1
 let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:SuperTabLongestHighlight = 1
 let g:SuperTabCrMapping = 1
-" }}}
-" Rainbow Parentheses{{{
-"
-" let g:rbpt_colorpairs = [
-"     \ ['brown',       '#EE2E24'],
-"     \ ['Darkblue',    '#98005D'],
-"     \ ['darkgray',    '#FFD204'],
-"     \ ['darkgreen',   '#00853E'],
-"     \ ['darkcyan',    '#85C3BC'],
-"     \ ['darkred',     '#009DDC'],
-"     \ ['darkmagenta', '#F386A1'],
-"     \ ['brown',       '#B06110'],
-"     \ ['gray',        '#EE2E24'],
-"     \ ['black',       '#98005D'],
-"     \ ['darkmagenta', '#FFD204'],
-"     \ ['Darkblue',    '#00853E'],
-"     \ ['darkgreen',   '#85C3BC'],
-"     \ ['darkcyan',    '#009DDC'],
-"     \ ['darkred',     '#F386A1'],
-"     \ ['red',         '#B06110'],
-"     \ ]
-
-" let g:rbpt_colorpairs = [
-"     \ ['brown',       '#FB9FB1'],
-"     \ ['Darkblue',    '#EDA987'],
-"     \ ['darkgray',    '#DDB26F'],
-"     \ ['darkgreen',   '#ACC267'],
-"     \ ['darkcyan',    '#12CFC0'],
-"     \ ['darkred',     '#6FC2EF'],
-"     \ ['darkmagenta', '#E1A3EE'],
-"     \ ['brown',       '#DEAF8F'],
-"     \ ['gray',        '#FB9FB1'],
-"     \ ['black',       '#EDA987'],
-"     \ ['darkmagenta', '#DDB26F'],
-"     \ ['Darkblue',    '#ACC267'],
-"     \ ['darkgreen',   '#12CFC0'],
-"     \ ['darkcyan',    '#6FC2EF'],
-"     \ ['darkred',     '#E1A3EE'],
-"     \ ['red',         '#DEAF8F'],
-"     \ ]
-
-let g:rbpt_colorpairs = [
-    \ ['brown',       '#AC4142'],
-    \ ['Darkblue',    '#D28445'],
-    \ ['darkgray',    '#F4BF75'],
-    \ ['darkgreen',   '#90A959'],
-    \ ['darkcyan',    '#75B5AA'],
-    \ ['darkred',     '#6A9FB5'],
-    \ ['darkmagenta', '#AA759F'],
-    \ ['brown',       '#8F5536'],
-    \ ['gray',        '#AC4142'],
-    \ ['black',       '#D28445'],
-    \ ['darkmagenta', '#F4BF75'],
-    \ ['Darkblue',    '#90A959'],
-    \ ['darkgreen',   '#75B5AA'],
-    \ ['darkcyan',    '#6A9FB5'],
-    \ ['darkred',     '#AA759F'],
-    \ ['red',         '#8F5536'],
-    \ ]
-
 " }}}
 " Indent Guides {{{
 
@@ -678,6 +629,18 @@ let g:go_fmt_command = "goimports"
 " fmt on save
 let g:go_fmt_autosave = 1
 
+" which fmt tool
+
+""let g:go_fmt_command = gofmt"
+""
+""let g:go_highlight_extra_types = 1
+
+" }}}
+" Vim-G (Search Google from G/Vim itself !) {{{
+
+let g:vim_g_open_command = "xdg-open"
+let g:vim_g_perl_command = "perl"
+let g:vim_g_query_url = "http://google.com/search?q="
 " }}}
 " ---------------------------------------------------------------------------
 "}}}
