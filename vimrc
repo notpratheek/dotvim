@@ -25,6 +25,15 @@
 "                ///-._ _ _ _ _ _ _}^ - - - - ~                     ~-- ,.-~
 "
 "
+" 
+"╭────────────────────────────────────╮
+"│   ╻ ╻╻┏┳┓┏━┓┏━╸                    │
+"│   ┃┏┛┃┃┃┃┣┳┛┃                      │
+"│   ┗┛ ╹╹ ╹╹┗╸┗━╸                    │
+"│                  -- by notpratheek │
+"╰────────────────────────────────────╯
+"
+"
 " Preamble ---------------------------------------------------------------- {{{
 "
 " No explanation needed
@@ -133,12 +142,14 @@ set guioptions=
 ca W w
 " set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}\ %=%-14.(%l,%c%V%)\ %P
 
+
+
 " Status line stuff {{{
 " Begin Status line
 set statusline=\ 
 " Show the mode
 set statusline+=%{toupper(mode())}\ 
-" Buffer count
+" Buffer number
 set statusline+=[%n]\ 
 " file name 
 " set statusline+=%{expand(%F)}\ 
@@ -156,15 +167,50 @@ set statusline+=%=\
 " fancy file format
 set statusline+=%{toupper(strpart(&filetype,0,1)).strpart(&filetype,1)}\ 
 " (current line / total lines in file)
-set statusline+=(%l:%c/%L)\ 
+" set statusline+=(%l:%c/%L)\ 
+set statusline+=%10(%l:%c/%L%)\ 
 " percent position in the file
-set statusline+=(%3p%%)\ 
+set statusline+=%4(%p%%%)\ 
 " set statusline+=(%p%%)\ 
+" 
+" scrooloose whitespace {{{
+" display a warning if &et is wrong, or we have mixed-indenting
+set statusline+=%#error#
+set statusline+=%{StatuslineTabWarning()}
+set statusline+=%*
+
+"recalculate the tab warning flag when idle and after writing
+autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
+
+"return '[&et]' if &et is set wrong
+"return '[mixed-indenting]' if spaces and tabs are used to indent
+"return an empty string if everything is fine
+function! StatuslineTabWarning()
+    if !exists("b:statusline_tab_warning")
+        let tabs = search('^\t', 'nw') != 0
+        let spaces = search('^ ', 'nw') != 0
+
+        if tabs && spaces
+            let b:statusline_tab_warning =  '[mixed-indenting]'
+        elseif (spaces && !&et) || (tabs && &et)
+            let b:statusline_tab_warning = '[&et]'
+        else
+            let b:statusline_tab_warning = ''
+        endif
+    endif
+    return b:statusline_tab_warning
+endfunction
+" }}}
+"
+"
+"
+"
+"
 "}}}
 " 
 " Use the custom fold function
 " (function is defined below)
-set foldtext=MyFoldText()
+" set foldtext=MyFoldText()
 " ---------------------------------------------------------------------------
 "}}}
 " Breaking Habit ---------------------------------------------------------- {{{
@@ -359,6 +405,10 @@ au VimResized * :wincmd =
 au Filetype * inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
 " ---------------------------------------------------------------------------
 " }}}
+" CSS {{{ 
+au syntax css setlocal omnifunc=csscomplete#CompleteCSS
+au syntax css setlocal completefunc=csscomplete#CompleteCSS
+" }}}
 " Clojure {{{
 au syntax clojure setlocal omnifunc=clojurecomplete#Complete
 au syntax clojure setlocal completefunc=clojurecomplete#Complete
@@ -368,6 +418,9 @@ autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 au FileType python set omnifunc=pythoncomplete#Complete
 au FileType python syn keyword pythonDecorator True None False self
+" }}}
+" Go {{{ 
+autocmd FileType go set omnifunc=go#complete#Complete
 " }}}
 " ---------------------------------------------------------------------------
 " }}}
