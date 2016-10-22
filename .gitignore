@@ -3,3 +3,5 @@ session/
 *.swp
 *.swo
 doc/tags
+undos
+swaps

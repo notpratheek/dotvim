@@ -1,38 +1,8 @@
-" vim:foldmethod=marker:foldlevel=0:textwidth=79
-"
-" I promise to clean up my vimrc one day !
-" Kepping up promise made in 9a59c443260aeb6ac64b7766fbe5cc4ad76f860a
-" vimrc
-" Author: Pratheek
-" My Vim settings.
-" _____________________
-"  Here be my Secrets
-" ---------------------
-"       o                    / \  //\
-"        o    |\___/|      /   \//  \\
-"             /0  0  \__  /    //  | \ \
-"            /     /  \/_/    //   |  \  \
-"            @_^_@'/   \/_   //    |   \   \
-"            //_^_/     \/_ //     |    \    \
-"         ( //) |        \///      |     \     \
-"       ( / /) _|_ /   )  //       |      \     _\
-"     ( // /) '/,_ _ _/  ( ; -.    |    _ _\.-~        .-~~~^-.
-"   (( / / )) ,-{        _      `-.|.-~-.           .~         `.
-"  (( // / ))  '/\      /                 ~-. _ .-~      .-~^-.  \
-"  (( /// ))      `.   {            }                   /      \  \
-"   (( / ))     .----~-.\        \-'                 .~         \  `. \^-.
-"              ///.----..>        \             _ -~             `.  ^-`  ^-_
-"                ///-._ _ _ _ _ _ _}^ - - - - ~                     ~-- ,.-~
-"
-"
-" 
-"╭────────────────────────────────────╮
-"│   ╻ ╻╻┏┳┓┏━┓┏━╸                    │
-"│   ┃┏┛┃┃┃┃┣┳┛┃                      │
-"│   ┗┛ ╹╹ ╹╹┗╸┗━╸                    │
-"│                  -- by notpratheek │
-"╰────────────────────────────────────╯
-"
+"╭───────────────────────────╮
+"│ ╻ ╻╻┏┳┓┏━┓┏━╸   ┏━╸╻╻  ┏━╸│
+"│ ┃┏┛┃┃┃┃┣┳┛┃     ┣╸ ┃┃  ┣╸ │
+"│ ┗┛ ╹╹ ╹╹┗╸┗━╸   ╹  ╹┗━╸┗━╸│
+"╰───────────────────────────╯
 "
 " Preamble ---------------------------------------------------------------- {{{
 "
@@ -43,7 +13,7 @@ execute pathogen#infect()
 call pathogen#helptags()
 set shell=/bin/bash
 " }}}
-" Basic settings ---------------------------------------------------------- {{{
+" Settings ---------------------------------------------------------- {{{
 "
 " Better than just /<search term>
 " Also, `\v` enables use of Perl compatible regexes
@@ -56,34 +26,33 @@ filetype plugin on
 " switch on syntax highlighting
 syntax enable
 " set a light background
-set background=light
+set background=dark
 
 " Have a different colorscheme for GUI and console version of Vim
 if has('gui_running')
-    colorscheme sol
+    colorscheme luna
 else
     colorscheme luna-term
 endif
 
 " Use ag over grep
-set grepprg=ag\ --nogroup\ --nocolor
-" ---------------------------------------------------------------------------
-" }}}
-" Set stuff (set <whatever>) ---------------------------------------------- {{{
-"
+" set grepprg=ag\ --nogroup\ --nocolor
+set grepprg=rg\ --color=never
 " I'm going to try to put a comment above most of these `set` stuff,
 " but if its not present, just do a `:h` for that
 
 " Always have a status bar
 set laststatus=2
+" UTF-8 encoding
 set encoding=utf-8
+" Number of colors
 set t_Co=256
-" set relativenumber
+" line number
 set number
 set autoindent
 set smartindent
 set incsearch
-set listchars=tab:›∙,eol:¬
+set listchars=tab:∙∙,eol:¬
 
 " Can *NEVER* settle with one font ! :D
 " set guifont=Menlo\ for\ Powerline\ 13
@@ -95,15 +64,22 @@ set guifont=DejaVu\ Sans\ Mono\ 15
 
 set hlsearch
 set wildmenu
-" set colorcolumn=80
+" only show the ColorColumn when the cursor is on the 80th char of that line
 call matchadd('ColorColumn', '\%81v', 100)
 set cursorline
-set tabstop=8
+set tabstop=4
 set expandtab
 set softtabstop=4
 set shiftwidth=4
 set foldlevel=99
 set foldmethod=indent
+
+" swap files in a dir
+set directory=~/.vim/swaps//
+
+" set undofile and an undo dir
+set undodir=~/.vim/undos
+set undofile
 
 " Remember more previously used stuff
 set history=1000
@@ -140,9 +116,6 @@ set guioptions=
 
 " too many times :W ! Hence, the shortcut
 ca W w
-" set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}\ %=%-14.(%l,%c%V%)\ %P
-
-
 
 " Status line stuff {{{
 " Begin Status line
@@ -151,33 +124,33 @@ set statusline=\
 set statusline+=%{toupper(mode())}\ 
 " Buffer number
 set statusline+=[%n]\ 
-" file name 
-" set statusline+=%{expand(%F)}\ 
+" file name (full path of the file)
 set statusline+=%F\ 
 " is file modified ?
 set statusline+=%m\ 
 " shift stuff to right
 set statusline+=%=\ 
-" is file READONLY
+" is file READONLY?
 set statusline+=%r\ 
 " Fugitive status
 set statusline+=%{fugitive#statusline()}\ 
 " more to right
 set statusline+=%=\ 
-" fancy file format
+" fancy file format (first letteruppercase, rest of the letters lowercase)
+" Eg -- html shown as Html
 set statusline+=%{toupper(strpart(&filetype,0,1)).strpart(&filetype,1)}\ 
-" (current line / total lines in file)
-" set statusline+=(%l:%c/%L)\ 
+" (current line:current column / total lines in file)
 set statusline+=%10(%l:%c/%L%)\ 
 " percent position in the file
 set statusline+=%4(%p%%%)\ 
-" set statusline+=(%p%%)\ 
-" 
-" scrooloose whitespace {{{
-" display a warning if &et is wrong, or we have mixed-indenting
+
 set statusline+=%#error#
 set statusline+=%{StatuslineTabWarning()}
+set statusline+=%{StatuslineTrailingSpaceWarning()}
 set statusline+=%*
+" 
+" scrooloose's whitespace warning {{{
+" display a warning if &et is wrong, or we have mixed-indenting
 
 "recalculate the tab warning flag when idle and after writing
 autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
@@ -201,18 +174,33 @@ function! StatuslineTabWarning()
     return b:statusline_tab_warning
 endfunction
 " }}}
+" scrooloose's trailing whitespace warning {{{
+"recalculate the trailing whitespace warning when idle, and after saving
+autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
+
+"return '[\s]' if trailing white space is detected
+"return '' otherwise
+function! StatuslineTrailingSpaceWarning()
+    if !exists("b:statusline_trailing_space_warning")
+
+        if !&modifiable
+            let b:statusline_trailing_space_warning = ''
+            return b:statusline_trailing_space_warning
+        endif
+
+        if search('\s\+$', 'nw') != 0
+            let b:statusline_trailing_space_warning = '[\s]'
+        else
+            let b:statusline_trailing_space_warning = ''
+        endif
+    endif
+    return b:statusline_trailing_space_warning
+endfunction
+" }}}
 "
+" }}}
 "
-"
-"
-"
-"}}}
-" 
-" Use the custom fold function
-" (function is defined below)
-" set foldtext=MyFoldText()
-" ---------------------------------------------------------------------------
-"}}}
+" }}}
 " Breaking Habit ---------------------------------------------------------- {{{
 "
 "!-- nnoremap <up> <nop>
@@ -256,13 +244,6 @@ function! <SID>SynStack()
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 " ---------------------------------------------------------------------------
-" When using (g)vimdiff (or running `:Gdiff` in fugitive)
-" Disable relativenumber and use normal numbers
-if &diff
-    set norelativenumber
-    set number
-endif
-" ---------------------------------------------------------------------------
 " Returns cursor to last position before quitting
 augroup line_return
     au!
@@ -271,12 +252,6 @@ augroup line_return
         \ execute 'normal! g`"zvzz' |
         \ endif
 augroup END
-" ---------------------------------------------------------------------------
-" Key mapping for tab switching
-""nnoremap <C-t> :tabnew<CR>
-" :map <C-x> :tabclose<CR>
-" :map <C-h> :tabprevious<CR>
-""nnoremap <C-Tab> :tabnext<CR>
 " ---------------------------------------------------------------------------
 " Thanks to Steve Losh
 " "Uppercase word" mapping.
@@ -324,6 +299,13 @@ augroup ft_python
     au Filetype python nnoremap <F5> :<C-u> ! python %<CR>
 augroup END
 "}}}
+" LaTeX/Tex  {{{
+augroup ft_tex
+    au!
+    au Filetype tex nnoremap <F5> :<C-u>!pdflatex %<CR>
+    au Filetype tex nnoremap <F6> :<C-u>!xdg-open %:r."pdf"<CR>
+augroup END
+" }}}
 " Lua {{{
 augroup ft_lua
     au!
@@ -383,14 +365,14 @@ set wildignore+=*.spl                            " compiled spelling word lists
 set wildignore+=*.sw?                            " Vim swap files
 set wildignore+=*.luac                           " Lua byte code
 set wildignore+=*.pyc                            " Python byte code
+set wildignore+=go/pkg                           " Go static files
+set wildignore+=go/bin                           " Go bin files
 set wildignore+=*.orig                           " Merge resolution files
+set wildignore+=*.class                          " Java Class files
 set wildignore+=$VIMRUNTIME/doc/*.txt            " Individual helpfiles
 set wildignore+=$VIMRUNTIME/doc/*.tar.gz         " compressed helpfiles
 " For the `**` meaning, do a `:h starstar-wildcard`
 set wildignore+=**/doc/*.txt
-" Clojure/Leiningen
-set wildignore+=classes
-set wildignore+=lib
 " ---------------------------------------------------------------------------
 "}}}
 " Auto Commands ----------------------------------------------------------- {{{
@@ -405,13 +387,9 @@ au VimResized * :wincmd =
 au Filetype * inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
 " ---------------------------------------------------------------------------
 " }}}
-" CSS {{{ 
+" CSS {{{
 au syntax css setlocal omnifunc=csscomplete#CompleteCSS
 au syntax css setlocal completefunc=csscomplete#CompleteCSS
-" }}}
-" Clojure {{{
-au syntax clojure setlocal omnifunc=clojurecomplete#Complete
-au syntax clojure setlocal completefunc=clojurecomplete#Complete
 " }}}
 " Python {{{
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
@@ -421,27 +399,14 @@ au FileType python syn keyword pythonDecorator True None False self
 " }}}
 " Go {{{ 
 autocmd FileType go set omnifunc=go#complete#Complete
+autocmd BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
+" }}}
+" HTML {{{ 
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 " }}}
 " ---------------------------------------------------------------------------
 " }}}
 " Custom Functions -------------------------------------------------------- {{{
-" Customised Folding via a function {{{
-function! MyFoldText()
-    let line = getline(v:foldstart)
-
-    let nucolwidth = &fdc + &number * &numberwidth
-    let windowwidth = winwidth(0) - nucolwidth - 3
-    let foldedlinecount = v:foldend - v:foldstart
-
-    " expand tabs into spaces
-    let onetab = strpart('          ', 0, &tabstop)
-    let line = substitute(line, '\t', onetab, 'g')
-
-    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
-    let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
-    return line . ' (' . foldedlinecount . ') ' . '…' . repeat(" ",fillcharcount) .  ' '
-endfunction
-" }}}
 " Template stuff {{{
 " http://got-ravings.blogspot.in/2008/08/vim-pr0n-simple-template-engine.html
 "
@@ -460,10 +425,8 @@ endfunction
 function! AvailableTemplates(lead, cmdline, cursorpos)
     let templateDir = expand('~/.vim/templates' . &filetype . '/')
     let files = split(globpath(templateDir, a:lead . '*'), '\n')
-
     return map(files, 'strpart(v:val,strlen(templateDir))')
 endfunction
-
 " }}}
 " Nyan cat {{{
 command! NyanMe call NyanMe()
@@ -588,6 +551,7 @@ endfunction
 " Startify {{{
 
 let g:startify_custom_indices = map(range(1,100), 'string(v:val)')
+let g:startify_session_dir = '~/.vim/session'
 let g:startify_bookmarks = [
             \ '~/.vim/vimrc',
             \ '~/.i3/config',
@@ -601,10 +565,14 @@ let g:startify_skiplist = [
                 \ '.gtkrc-2.0',
                 \ '/usr/share/vim/vim74/doc',
                 \ '/etc/*',
-                \ $VIMRUNTIME . '*/doc',
+                \ escape(fnamemodify(resolve($VIMRUNTIME), ':p'), '\') . 'doc',
                 \ 'bundle/.*/doc'
                 \ ]
 
+let g:startify_relative_path = 1
+let g:startify_update_oldfiles = 1
+autocmd User Startified let &l:stl = ' Startify'
+let g:startify_custom_header = []
 let g:startify_list_order = [
       \ ['   MRU:'],
       \ 'files',
@@ -638,18 +606,23 @@ let g:startify_list_order = [
 " make CtrlP exclude these type of files from adding to MRUFiles cache
 " let g:ctrlp_custom_ignore = '~/bin'
 
-  let g:ctrlp_custom_ignore = {
-    \ 'dir':  '\v[\/]\.(git|hg|svn|Torrents)$',
-    \ 'file': '\v\.(exe|so|dll|srt|txt|part)$',
-    \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
-    \ }
+""let g:ctrlp_custom_ignore = {
+""            \ 'dir':  '\v[\/](bin|Torrents|Music|Pictures)$',
+""            \ 'file': '\v(\.cpp|\.h|\.hh|\.cxx|\.srt|\.part)@<!$'
+""            \ }
+""let g:ctrlp_custom_ignore = {
+""            \ 'dir':  '\v[\/]\.(git|hg|svn|)$',
+""            \ 'file': '\v\.(exe|so|dll|srt|txt|part)$',
+""            \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
+""            \ }
 let g:ctrlp_mruf_exclude = '*.tar.gz\|bin|.git|*.srt|*.part|*.txt'
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
 let g:ctrlp_show_hidden = 1
 
 " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+" let g:ctrlp_user_command = 'ag %s -p /home/pratheek/.agignore -l --nocolor --hidden -g \""'
+let g:ctrlp_user_command = 'rg %s --files -g ""'
 
 " reuse startify window
 let g:ctrlp_reuse_window = 'startify'
@@ -698,3 +671,4 @@ let g:vim_g_query_url = "http://google.com/search?q="
 " ---------------------------------------------------------------------------
 "}}}
 "
+" vim:foldmethod=marker:foldlevel=0:textwidth=79
