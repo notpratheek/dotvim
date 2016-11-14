@@ -394,6 +394,7 @@ au syntax css setlocal completefunc=csscomplete#CompleteCSS
 " Python {{{
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
+autocmd FileType *.py set textwidth=79 shiftwidth=4 tabstop=4 expandtab softtabstop=4 shiftround autoindent
 au FileType python set omnifunc=pythoncomplete#Complete
 au FileType python syn keyword pythonDecorator True None False self
 " }}}
@@ -554,8 +555,8 @@ let g:startify_custom_indices = map(range(1,100), 'string(v:val)')
 let g:startify_session_dir = '~/.vim/session'
 let g:startify_bookmarks = [
             \ '~/.vim/vimrc',
-            \ '~/.i3/config',
-            \ '~/.i3/status.conf'
+            \ '~/.config/i3/config',
+            \ '~/.config/i3/i3status.conf'
             \ ]
 let g:startify_files_number = 8
 let g:startify_change_to_dir = 0
