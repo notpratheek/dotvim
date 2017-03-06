@@ -26,13 +26,26 @@ filetype plugin on
 " switch on syntax highlighting
 syntax enable
 " set a light background
-set background=dark
+
+set hidden
+
+set dictionary=/usr/share/dict/words
+
+set textwidth=85
+
+augroup test_group
+    autocmd!
+    au Filetype * highlight ExtraWhiteSpace guibg=red
+    au Filetype * match ExtraWhiteSpace /\s\+$/
+augroup END
 
 " Have a different colorscheme for GUI and console version of Vim
 if has('gui_running')
-    colorscheme luna
+    set background=light
+    colorscheme sol
 else
-    colorscheme luna-term
+    set background=dark
+    colorscheme sol-term
 endif
 
 " Use ag over grep
@@ -59,8 +72,8 @@ set listchars=tab:∙∙,eol:¬
 " set guifont=Monaco\ for\ Powerline\ 13
 " set guifont=Inconsolata\ Medium\ 17
 " set guifont=Source\ Code\ Pro\ 15
-set guifont=DejaVu\ Sans\ Mono\ 15
-" set guifont=Fira\ Mono\ 15
+" set guifont=DejaVu\ Sans\ Mono\ 15
+set guifont=Fira\ Mono\ 15
 
 set hlsearch
 set wildmenu
@@ -220,7 +233,8 @@ endfunction
 " Mind Hacks -------------------------------------------------------------- {{{
 "
 " Better <C-^> hack !
-nnoremap <C-Tab> :buffers<CR>:b<Space>
+" nnoremap <C-Tab> :buffers<CR>:b<Space>
+nnoremap <C-Tab> :CtrlPBuffer<CR>
 " ---------------------------------------------------------------------------
 " with the default `:e` I'll have to remember the path of the file (which is hard)
 " So, remap `:e` to run `:CtrlPMRUFiles`
@@ -238,19 +252,19 @@ nnoremap <C-S-c> :let @/=""<CR>
 " Thanks to Drew Neil from vimcasts
 nmap <A-S-P> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
-  if !exists("*synstack")
-    return
-  endif
-  echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+    if !exists("*synstack")
+        return
+    endif
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 " ---------------------------------------------------------------------------
 " Returns cursor to last position before quitting
 augroup line_return
     au!
     au BufReadPost *
-        \ if line("'\"") > 0 && line("'\"") <= line("$") |
-        \ execute 'normal! g`"zvzz' |
-        \ endif
+                \ if line("'\"") > 0 && line("'\"") <= line("$") |
+                \ execute 'normal! g`"zvzz' |
+                \ endif
 augroup END
 " ---------------------------------------------------------------------------
 " Thanks to Steve Losh
@@ -395,7 +409,7 @@ au syntax css setlocal completefunc=csscomplete#CompleteCSS
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 autocmd FileType *.py set textwidth=79 shiftwidth=4 tabstop=4 expandtab softtabstop=4 shiftround autoindent
-au FileType python set omnifunc=pythoncomplete#Complete
+"" au FileType python set omnifunc=pythoncomplete#Complete
 au FileType python syn keyword pythonDecorator True None False self
 " }}}
 " Go {{{ 
@@ -562,45 +576,45 @@ let g:startify_files_number = 8
 let g:startify_change_to_dir = 0
 let g:startify_change_to_vcs_root = 1
 let g:startify_skiplist = [
-                \ '.git/COMMIT_EDITMSG',
-                \ '.gtkrc-2.0',
-                \ '/usr/share/vim/vim74/doc',
-                \ '/etc/*',
-                \ escape(fnamemodify(resolve($VIMRUNTIME), ':p'), '\') . 'doc',
-                \ 'bundle/.*/doc'
-                \ ]
+            \ '.git/COMMIT_EDITMSG',
+            \ '.gtkrc-2.0',
+            \ '/usr/share/vim/vim74/doc',
+            \ '/etc/*',
+            \ escape(fnamemodify(resolve($VIMRUNTIME), ':p'), '\') . 'doc',
+            \ 'bundle/.*/doc'
+            \ ]
 
 let g:startify_relative_path = 1
 let g:startify_update_oldfiles = 1
 autocmd User Startified let &l:stl = ' Startify'
 let g:startify_custom_header = []
 let g:startify_list_order = [
-      \ ['   MRU:'],
-      \ 'files',
-      \ ['   Sess:'],
-      \ 'sessions',
-      \ ['   Markers:'],
-      \ 'bookmarks'
-      \ ]
+            \ ['   MRU:'],
+            \ 'files',
+            \ ['   Sess:'],
+            \ 'sessions',
+            \ ['   Markers:'],
+            \ 'bookmarks'
+            \ ]
 " Startify Custom Header
 "let g:startify_custom_header = [
-            "\ '  .____---^^     ^^---____.                                                      ',
-            "\ '  TI      *       *      IT  Three Rings for the Elvin-Kings under the sky.      ',
-            "\ '  !I          *          I!  Seven for the DwarfLords in their halls of stone.   ',
-            "\ '   X                     X       Nine for the Mortal Men doomed to die.          ',
-            "\ '   XL                   JX       One for the Dark Lord on his dark throne.       ',
-            "\ '   II        / \        II   In the Land of Mordor where the Shadow Lies.        ',
-            "\ '   II   / \ /   \ / \   II                                                       ',
-            "\ '    X  /   v     v   \  X       One Ring to rule them all,One Ring to find them, ',
-            "\ '    ``/    _     _    \''     One Ring to bring them all and in the Darkness     ',
-            "\ '     \\- _-_ -_- _-_ -//         Bind Them                                       ',
-            "\ '       \\_-  -_-  -_//          In the Land of Mordor where the Shadows Lie.     ',
-            "\ '         ``       ''                                                             ',
-            "\ '           ``-_-''                                                               ',
-            "\ '                                                    "Lord Of THe Rings"          ',
-            "\ '                                                          by J.R.R. Tolkien      ',
-            "\ '',
-            "\ ]
+"\ '  .____---^^     ^^---____.                                                      ',
+"\ '  TI      *       *      IT  Three Rings for the Elvin-Kings under the sky.      ',
+"\ '  !I          *          I!  Seven for the DwarfLords in their halls of stone.   ',
+"\ '   X                     X       Nine for the Mortal Men doomed to die.          ',
+"\ '   XL                   JX       One for the Dark Lord on his dark throne.       ',
+"\ '   II        / \        II   In the Land of Mordor where the Shadow Lies.        ',
+"\ '   II   / \ /   \ / \   II                                                       ',
+"\ '    X  /   v     v   \  X       One Ring to rule them all,One Ring to find them, ',
+"\ '    ``/    _     _    \''     One Ring to bring them all and in the Darkness     ',
+"\ '     \\- _-_ -_- _-_ -//         Bind Them                                       ',
+"\ '       \\_-  -_-  -_//          In the Land of Mordor where the Shadows Lie.     ',
+"\ '         ``       ''                                                             ',
+"\ '           ``-_-''                                                               ',
+"\ '                                                    "Lord Of THe Rings"          ',
+"\ '                                                          by J.R.R. Tolkien      ',
+"\ '',
+"\ ]
 " }}}
 " CtrlP {{{
 
@@ -668,6 +682,14 @@ let g:go_fmt_autosave = 1
 let g:vim_g_open_command = "xdg-open"
 let g:vim_g_perl_command = "perl"
 let g:vim_g_query_url = "http://google.com/search?q="
+" }}}
+" Signify {{{
+let g:signify_sign_show_text = 0
+" }}}
+" JEDI {{{
+let g:jedi#force_py_version = 3
+set omnifunc=jedi#completions
+
 " }}}
 " ---------------------------------------------------------------------------
 "}}}
