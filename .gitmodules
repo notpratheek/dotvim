@@ -1,18 +1,9 @@
-[submodule "bundle/supertab"]
-	path = bundle/supertab
-	url = https://github.com/ervandew/supertab.git
 [submodule "bundle/indent-guides"]
 	path = bundle/indent-guides
 	url = git://github.com/nathanaelkane/vim-indent-guides.git
-[submodule "bundle/startify"]
-	path = bundle/startify
-	url = https://github.com/mhinz/vim-startify.git
 [submodule "bundle/signify"]
 	path = bundle/signify
 	url = https://github.com/mhinz/vim-signify.git
-[submodule "bundle/vim-over"]
-	path = bundle/vim-over
-	url = https://github.com/osyo-manga/vim-over.git
 [submodule "bundle/fugitive"]
 	path = bundle/fugitive
 	url = git://github.com/tpope/vim-fugitive.git
@@ -28,6 +19,3 @@
 [submodule "bundle/sol"]
 	path = bundle/sol
 	url = https://github.com/notpratheek/vim-sol.git
-[submodule "bundle/sparkup"]
-	path = bundle/sparkup
-	url = https://github.com/rstacruz/sparkup.git
