@@ -4,6 +4,30 @@
 "│ ┗┛ ╹╹ ╹╹┗╸┗━╸   ╹  ╹┗━╸┗━╸│
 "╰───────────────────────────╯
 "
+" Plugins ---------------------------------------------------------------- {{{
+call plug#begin('~/.vim/bundle')
+
+Plug 'ervandew/supertab'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'mhinz/vim-startify'
+Plug 'mhinz/vim-signify'
+Plug 'osyo-manga/vim-over'
+Plug 'tpope/vim-vinegar'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-markdown'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'notpratheek/vim-luna'
+Plug 'notpratheek/vim-sol'
+Plug 'rstacruz/sparkup'
+" Plug 'vim-syntastic/syntastic'
+Plug 'jiangmiao/auto-pairs'
+Plug 'maralla/completor.vim'
+Plug 'google/vim-searchindex'
+Plug 'w0rp/ale'
+Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+
+call plug#end()
+" }}}
 " Preamble ---------------------------------------------------------------- {{{
 "
 " No explanation needed
@@ -30,11 +54,11 @@ set dictionary=/usr/share/dict/words
 
 set textwidth=85
 
-augroup test_group
-    autocmd!
-    au Filetype * highlight ExtraWhiteSpace guibg=red
-    au Filetype * match ExtraWhiteSpace /\s\+$/
-augroup END
+" augroup test_group
+"     autocmd!
+"     au Filetype * highlight ExtraWhiteSpace guibg=red
+"     au Filetype * match ExtraWhiteSpace /\s\+$/
+" augroup END
 
 " Have a different colorscheme for GUI and console version of Vim
 if has('gui_running')
@@ -62,7 +86,9 @@ set number
 set autoindent
 set smartindent
 set incsearch
-set listchars=tab:∙∙,eol:¬
+" set listchars=tab:∙∙,eol:¬,trail:·
+set listchars=tab:∙∙,trail:·,
+set list
 
 " Can *NEVER* settle with one font ! :D
 " set guifont=Menlo\ for\ Powerline\ 13
@@ -83,12 +109,14 @@ set softtabstop=4
 set shiftwidth=4
 set foldlevel=99
 set foldmethod=indent
+set breakindent
+set noswapfile
 
 " swap files in a dir
 set directory=~/.vim/swaps//
 
 " set undofile and an undo dir
-set undodir=~/.vim/undos
+set undodir=~/.vim/undos//
 set undofile
 
 " Remember more previously used stuff
@@ -116,7 +144,8 @@ set matchtime=3
 " do a `:h 'complete'`
 set complete=.,w,b,u,t
 " do a `:h 'completeopt'`
-set completeopt=longest,menuone,preview,menu
+"set completeopt=longest,menuone,preview,menu
+set completeopt=longest,menuone,menu
 
 " I think all these guioptions should be in gvimrc,
 " but since vimrc loads faster, I've added them here
@@ -126,39 +155,58 @@ set guioptions=
 
 " too many times :W ! Hence, the shortcut
 ca W w
+ca Qa qa
+ca Wqa wqa
+ca qa1 qa!
+ca qA1 qa!
+ca qA! qa!
+
+" re-center the search results to the center of the screen
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zz
+nnoremap g# g#zz
 
 " Status line stuff {{{
 " Begin Status line
-set statusline=\ 
+"set statusline=\
 " Show the mode
-set statusline+=%{toupper(mode())}\ 
+"set statusline+=%{toupper(mode())}\
 " Buffer number
-set statusline+=[%n]\ 
+"set statusline+=[%n]\
 " file name (full path of the file)
-set statusline+=%F\ 
+"set statusline+=%F\
 " is file modified ?
-set statusline+=%m\ 
+"set statusline+=%m\
 " shift stuff to right
-set statusline+=%=\ 
+"set statusline+=%=\
 " is file READONLY?
-set statusline+=%r\ 
+"set statusline+=%r\
 " Fugitive status
-set statusline+=%{fugitive#statusline()}\ 
+"set statusline+=%{fugitive#statusline()}\
 " more to right
-set statusline+=%=\ 
+"set statusline+=%=\
+" encoding
+"set statusline+=%{(&fenc==\"\"?&enc:&fenc)}\
 " fancy file format (first letteruppercase, rest of the letters lowercase)
 " Eg -- html shown as Html
-set statusline+=%{toupper(strpart(&filetype,0,1)).strpart(&filetype,1)}\ 
+"set statusline+=%{toupper(strpart(&filetype,0,1)).strpart(&filetype,1)}\
 " (current line:current column / total lines in file)
-set statusline+=%10(%l:%c/%L%)\ 
+"set statusline+=%10(%l:%c/%L%)\
 " percent position in the file
-set statusline+=%4(%p%%%)\ 
+"set statusline+=%4(%p%%%)\
 
-set statusline+=%#error#
-set statusline+=%{StatuslineTabWarning()}
-set statusline+=%{StatuslineTrailingSpaceWarning()}
-set statusline+=%*
-" 
+"set statusline+=%#error#
+"set statusline+=%{StatuslineTabWarning()}
+"set statusline+=%{StatuslineTrailingSpaceWarning()}
+"set statusline+=%*
+
+
+set statusline=\ %{toupper(mode())}\ [%n]\ %F\ %m\ %=\ %r\ %{fugitive#statusline()}\ %=\ %{(&fenc==\"\"?&enc:&fenc)}\ %{toupper(strpart(&filetype,0,1)).strpart(&filetype,1)}\ %10(%l:%c/%L%)\ %4(%p%%%)\ %#error#%{StatuslineTabWarning()}%{StatuslineTrailingSpaceWarning()}%*
+
+
 " scrooloose's whitespace warning {{{
 " display a warning if &et is wrong, or we have mixed-indenting
 
@@ -211,22 +259,6 @@ endfunction
 " }}}
 "
 " }}}
-" Breaking Habit ---------------------------------------------------------- {{{
-"
-"!-- nnoremap <up> <nop>
-"!-- nnoremap <down> <nop>
-"!-- nnoremap <left> <nop>
-"!-- nnoremap <right> <nop>
-"!-- " inoremap <up> <nop>
-"!-- " inoremap <down> <nop>
-"!-- " inoremap <left> <nop>
-"!-- " inoremap <right> <nop>
-"!-- vnoremap <up> <nop>
-"!-- vnoremap <down> <nop>
-"!-- vnoremap <left> <nop>
-"!-- vnoremap <right> <nop>
-" ---------------------------------------------------------------------------
-"}}}
 " Mind Hacks -------------------------------------------------------------- {{{
 "
 " Better <C-^> hack !
@@ -294,20 +326,12 @@ inoremap <C-u> <esc>mzgUiw`za
 "}}}
 " <F5> FileType Runners and Builders -------------------------------------- {{{
 "
-" Go {{{
-augroup ft_go
-    au!
-    " Run the go program in the current buffer
-    " depends on fatih/vim-go
-    au Filetype go nnoremap <F5> :<C-u>GoRun<CR>
-augroup END
-"}}}
 " Python {{{
 augroup ft_python
     au!
     " Run the code in `%` (path/to/file) in python
     " Damn the <leader>r in python-mode for python3
-    au Filetype python nnoremap <F5> :<C-u> ! python %<CR>
+    au Filetype python nnoremap <F5> :<C-u> ! python3 %<CR>
 augroup END
 "}}}
 " LaTeX/Tex  {{{
@@ -315,13 +339,6 @@ augroup ft_tex
     au!
     au Filetype tex nnoremap <F5> :<C-u>!pdflatex %<CR>
     au Filetype tex nnoremap <F6> :<C-u>!xdg-open %:r."pdf"<CR>
-augroup END
-" }}}
-" Lua {{{
-augroup ft_lua
-    au!
-    " Run the code in `%` (path/to/file) in lua
-    au Filetype lua nnoremap <F5> :<C-u> ! lua %<CR>
 augroup END
 " }}}
 " C {{{
@@ -342,26 +359,6 @@ augroup ft_c
     " `:!gcc -Wall ~/foo/bar/baz/dumb.c -o ~/foo/bar/baz/dumb.c.o`
     "
     au Filetype c nnoremap <F5> :<C-u> ! gcc -Wall % -o %.o<CR>
-augroup END
-" }}}
-" C++ {{{
-augroup ft_cpp
-    au!
-    " Build the given .cc file
-    " by giving `%` as the arg (which is path/to/file)
-    " and store the built binary file in the same path
-    "
-    " Best explained with example:
-    " Let's say file name is foo_bar.cc
-    " Then, this makes it `:! g++ -Wall foo_bar.cc -o foo_bar.cc.oo`
-    " Slightly bad in naming the bin file
-    "
-    " This also works in this case.
-    " $ gvim ~/foo/bar/baz/dumb.cc
-    " Then, this runs as:
-    " `:!g++ -Wall ~/foo/bar/baz/dumb.cc -o ~/foo/bar/baz/dumb.cc.oo`
-    "
-    au Filetype cpp nnoremap <F5> :<C-u> ! g++ -Wall % -o %.oo<CR>
 augroup END
 " }}}
 " ---------------------------------------------------------------------------
@@ -391,11 +388,6 @@ set wildignore+=**/doc/*.txt
 " ---------------------------------------------------------------------------
 " Resize splits when the window is resized
 au VimResized * :wincmd =
-" First off,  HUGE thanks to Steve Losh !
-" Read below !
-" Make {<cr> insert a pair of brackets in such a way that the cursor is correctly
-" positioned inside of them AND the following code doesn't get unfolded.
-au Filetype * inoremap <buffer> {<cr> {}<left><cr><space><space><space><space>.<cr><esc>kA<bs>
 " ---------------------------------------------------------------------------
 " }}}
 " CSS {{{
@@ -406,19 +398,14 @@ au syntax css setlocal completefunc=csscomplete#CompleteCSS
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e ``
 autocmd BufRead *.py set smartindent cinwords=if,elif,else,for,while,try,except,finally,def,class
 autocmd FileType *.py set textwidth=79 shiftwidth=4 tabstop=4 expandtab softtabstop=4 shiftround autoindent
-"" au FileType python set omnifunc=pythoncomplete#Complete
 au FileType python syn keyword pythonDecorator True None False self
 " }}}
-" Go {{{ 
-autocmd FileType go set omnifunc=go#complete#Complete
-autocmd BufNewFile,BufRead *.go setlocal noet ts=4 sw=4 sts=4
-" }}}
-" HTML {{{ 
+" HTML {{{
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 " }}}
 " ---------------------------------------------------------------------------
 " }}}
-" Custom Functions -------------------------------------------------------- {{{
+" Custom Functions and Other stuff ---------------------------------------- {{{
 " Template stuff {{{
 " http://got-ravings.blogspot.in/2008/08/vim-pr0n-simple-template-engine.html
 "
@@ -557,6 +544,22 @@ function! NyanMe()
     redraw
 endfunction
 " }}}
+" Spell Checker ----------------------------------------------------------- {{{
+
+if has("spell")
+  " turn spelling on by default
+  " set spell
+
+  " toggle spelling with F4 key
+  nnoremap <F7> :set spell!<CR><Bar>:echo "Spell Check: " . strpart("OffOn", 3 * &spell, 3)<CR>
+
+  " they were using white on white
+  highlight PmenuSel ctermfg=black ctermbg=lightgray
+
+  " limit it to just the top 10 items
+  set sps=best,10
+endif
+" }}}
 " ---------------------------------------------------------------------------
 " }}}
 " Plugin Settings --------------------------------------------------------- {{{
@@ -565,6 +568,7 @@ endfunction
 let g:startify_custom_indices = map(range(1,100), 'string(v:val)')
 let g:startify_session_dir = '~/.vim/session'
 let g:startify_bookmarks = [
+            \ '~/.Xresources',
             \ '~/.vim/vimrc',
             \ '~/.config/i3/config',
             \ '~/.config/i3/i3status.conf'
@@ -654,40 +658,20 @@ let g:SuperTabCrMapping = 1
 let g:indent_guides_guide_size = 1
 " let g:indent_guides_enable_on_vim_startup = 1
 " }}}
-" Golang {{{
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-
-" Automatically insert imports on save
-let g:go_fmt_command = "goimports"
-
-" fmt on save
-let g:go_fmt_autosave = 1
-
-" which fmt tool
-
-""let g:go_fmt_command = gofmt"
-""
-""let g:go_highlight_extra_types = 1
-
-" }}}
 " Vim-G (Search Google from G/Vim itself !) {{{
 
 let g:vim_g_open_command = "xdg-open"
 let g:vim_g_perl_command = "perl"
-let g:vim_g_query_url = "http://google.com/search?q="
+let g:vim_g_query_url = "http://google.co.in/search?q="
 " }}}
 " Signify {{{
 let g:signify_sign_show_text = 0
 " }}}
-" JEDI {{{
-let g:jedi#force_py_version = 3
-set omnifunc=jedi#completions
-
-" }}}
+" Completor {{{
+let g:completor_python_binary = '/usr/bin/python3'
+let g:completor_completion_delay = 20
+let g:completor_min_chars = 1
+"}}}
 " ---------------------------------------------------------------------------
 "}}}
 "
