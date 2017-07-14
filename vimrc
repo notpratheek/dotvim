@@ -8,9 +8,6 @@
 "
 " No explanation needed
 set nocompatible
-" Load pathogen, and automatically call pathogen#helptags()
-execute pathogen#infect()
-call pathogen#helptags()
 set shell=/bin/bash
 " }}}
 " Settings ---------------------------------------------------------- {{{
