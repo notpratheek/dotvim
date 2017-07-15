@@ -8,23 +8,23 @@
 call plug#begin('~/.vim/bundle')
 
 Plug 'ervandew/supertab'
-Plug 'nathanaelkane/vim-indent-guides'
+" Plug 'nathanaelkane/vim-indent-guides'
 Plug 'mhinz/vim-startify'
 Plug 'mhinz/vim-signify'
 Plug 'osyo-manga/vim-over'
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-markdown'
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tpope/vim-markdown', {'for' : 'markdown'}
+Plug 'ctrlpvim/ctrlp.vim', {'on' : 'CtrlP'}
 Plug 'notpratheek/vim-luna'
 Plug 'notpratheek/vim-sol'
-Plug 'rstacruz/sparkup'
+Plug 'rstacruz/sparkup', {'for' : 'html'}
 " Plug 'vim-syntastic/syntastic'
 Plug 'jiangmiao/auto-pairs'
 Plug 'maralla/completor.vim'
 Plug 'google/vim-searchindex'
 Plug 'w0rp/ale'
-Plug 'mbbill/undotree', { 'on': 'UndotreeToggle' }
+Plug 'mbbill/undotree', {'on': 'UndotreeToggle'}
 
 call plug#end()
 " }}}
@@ -671,6 +671,14 @@ let g:signify_sign_show_text = 0
 let g:completor_python_binary = '/usr/bin/python3'
 let g:completor_completion_delay = 20
 let g:completor_min_chars = 1
+"}}}
+" ALE {{{
+" !!! Requires `autopep8`, `isort` to be installed
+" !!! (might as well also have `flake8` installed)
+let g:ale_fixers = {'python' : ['isort','autopep8']}
+let g:ale_python_autopep8_options = '--aggressive'
+let g:ale_fix_on_save = 1
+let g:ale_lint_on_save = 1
 "}}}
 " ---------------------------------------------------------------------------
 "}}}
