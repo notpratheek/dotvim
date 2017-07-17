@@ -8,23 +8,22 @@
 call plug#begin('~/.vim/bundle')
 
 Plug 'ervandew/supertab'
-" Plug 'nathanaelkane/vim-indent-guides'
 Plug 'mhinz/vim-startify'
 Plug 'mhinz/vim-signify'
 Plug 'osyo-manga/vim-over'
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-markdown', {'for' : 'markdown'}
-Plug 'ctrlpvim/ctrlp.vim', {'on' : 'CtrlP'}
+Plug 'ctrlpvim/ctrlp.vim', {'on' : ['CtrlPBuffer', 'CtrlPMRUFiles']}
 Plug 'notpratheek/vim-luna'
 Plug 'notpratheek/vim-sol'
 Plug 'rstacruz/sparkup', {'for' : 'html'}
-" Plug 'vim-syntastic/syntastic'
 Plug 'jiangmiao/auto-pairs'
 Plug 'maralla/completor.vim'
 Plug 'google/vim-searchindex'
 Plug 'w0rp/ale'
 Plug 'mbbill/undotree', {'on': 'UndotreeToggle'}
+Plug 'chrisbra/unicode.vim'
 
 call plug#end()
 " }}}
@@ -34,7 +33,7 @@ call plug#end()
 set nocompatible
 set shell=/bin/bash
 " }}}
-" Settings ---------------------------------------------------------- {{{
+" General Settings -------------------------------------------------------- {{{
 "
 " Better than just /<search term>
 " Also, `\v` enables use of Perl compatible regexes
@@ -48,17 +47,13 @@ filetype plugin on
 syntax enable
 " set a light background
 
+" Useful with CtrlP
 set hidden
 
 set dictionary=/usr/share/dict/words
 
-set textwidth=85
-
-" augroup test_group
-"     autocmd!
-"     au Filetype * highlight ExtraWhiteSpace guibg=red
-"     au Filetype * match ExtraWhiteSpace /\s\+$/
-" augroup END
+" standard width
+set textwidth=80
 
 " Have a different colorscheme for GUI and console version of Vim
 if has('gui_running')
@@ -100,8 +95,8 @@ set guifont=Fira\ Mono\ 15
 
 set hlsearch
 set wildmenu
-" only show the ColorColumn when the cursor is on the 80th char of that line
-call matchadd('ColorColumn', '\%81v', 100)
+" only show the ColorColumn when the cursor is on the 79th char of that line
+call matchadd('ColorColumn', '\%80v', 100)
 set cursorline
 set tabstop=4
 set expandtab
@@ -110,9 +105,9 @@ set shiftwidth=4
 set foldlevel=99
 set foldmethod=indent
 set breakindent
-set noswapfile
 
 " swap files in a dir
+set updatecount=10
 set directory=~/.vim/swaps//
 
 " set undofile and an undo dir
@@ -142,7 +137,7 @@ set matchtime=3
 
 " Better completion
 " do a `:h 'complete'`
-set complete=.,w,b,u,t
+set complete=.,w,b,u,t,i
 " do a `:h 'completeopt'`
 "set completeopt=longest,menuone,preview,menu
 set completeopt=longest,menuone,menu
@@ -169,7 +164,11 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
-" Status line stuff {{{
+" remap : -> ;
+nnoremap ; :
+
+" }}}
+" Status line -------------------------------------------------------------- {{{
 " Begin Status line
 "set statusline=\
 " Show the mode
@@ -204,62 +203,10 @@ nnoremap g# g#zz
 "set statusline+=%*
 
 
-set statusline=\ %{toupper(mode())}\ [%n]\ %F\ %m\ %=\ %r\ %{fugitive#statusline()}\ %=\ %{(&fenc==\"\"?&enc:&fenc)}\ %{toupper(strpart(&filetype,0,1)).strpart(&filetype,1)}\ %10(%l:%c/%L%)\ %4(%p%%%)\ %#error#%{StatuslineTabWarning()}%{StatuslineTrailingSpaceWarning()}%*
-
-
-" scrooloose's whitespace warning {{{
-" display a warning if &et is wrong, or we have mixed-indenting
-
-"recalculate the tab warning flag when idle and after writing
-autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
-
-"return '[&et]' if &et is set wrong
-"return '[mixed-indenting]' if spaces and tabs are used to indent
-"return an empty string if everything is fine
-function! StatuslineTabWarning()
-    if !exists("b:statusline_tab_warning")
-        let tabs = search('^\t', 'nw') != 0
-        let spaces = search('^ ', 'nw') != 0
-
-        if tabs && spaces
-            let b:statusline_tab_warning =  '[mixed-indenting]'
-        elseif (spaces && !&et) || (tabs && &et)
-            let b:statusline_tab_warning = '[&et]'
-        else
-            let b:statusline_tab_warning = ''
-        endif
-    endif
-    return b:statusline_tab_warning
-endfunction
-" }}}
-" scrooloose's trailing whitespace warning {{{
-"recalculate the trailing whitespace warning when idle, and after saving
-autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
-
-"return '[\s]' if trailing white space is detected
-"return '' otherwise
-function! StatuslineTrailingSpaceWarning()
-    if !exists("b:statusline_trailing_space_warning")
-
-        if !&modifiable
-            let b:statusline_trailing_space_warning = ''
-            return b:statusline_trailing_space_warning
-        endif
-
-        if search('\s\+$', 'nw') != 0
-            let b:statusline_trailing_space_warning = '[\s]'
-        else
-            let b:statusline_trailing_space_warning = ''
-        endif
-    endif
-    return b:statusline_trailing_space_warning
-endfunction
-" }}}
+set statusline=\ %{toupper(mode())}\ [%n]\ %{mhi#sy_stats_wrapper()}\ %<%F\ %m\ %=\ %r\ %{prat#fugitive_status()}\ %=\ %{prat#ale_status()}\ %{toupper(strpart(&filetype,0,1)).strpart(&filetype,1)}\ %10(%l:%c/%L%)\ %4(%p%%%)\ %#error#%{prat#stl_tab_warning()}%{prat#stl_trailing_space_warning()}%*\%#errormsg#%{(&fenc!='utf-8'&&\&fenc!=''?'\ '.&fenc.'\ ':'')}%*
 "
 " }}}
-"
-" }}}
-" Mind Hacks -------------------------------------------------------------- {{{
+" Better Shortcuts -------------------------------------------------------- {{{
 "
 " Better <C-^> hack !
 " nnoremap <C-Tab> :buffers<CR>:b<Space>
@@ -272,7 +219,7 @@ nnoremap <C-Tab> :CtrlPBuffer<CR>
 "           commands that start with e will be hard to type.
 "           (You'll have to hit `:` and wait about a half a sec or so
 "           to start typing the command, starting with 'e')
-nnoremap :e :CtrlPMRUFiles<CR>
+nnoremap ;e :CtrlPMRUFiles<CR>
 " ---------------------------------------------------------------------------
 " clear serached stuff
 nnoremap <C-S-c> :let @/=""<CR>
@@ -371,10 +318,7 @@ set wildignore+=*.jpg,*.bmp,*.gif,*.png,*.jpeg   " binary images
 set wildignore+=*.o,*.oo,*.obj,*.exe,*.dll       " compiled object files
 set wildignore+=*.spl                            " compiled spelling word lists
 set wildignore+=*.sw?                            " Vim swap files
-set wildignore+=*.luac                           " Lua byte code
 set wildignore+=*.pyc                            " Python byte code
-set wildignore+=go/pkg                           " Go static files
-set wildignore+=go/bin                           " Go bin files
 set wildignore+=*.orig                           " Merge resolution files
 set wildignore+=*.class                          " Java Class files
 set wildignore+=$VIMRUNTIME/doc/*.txt            " Individual helpfiles
@@ -388,6 +332,10 @@ set wildignore+=**/doc/*.txt
 " ---------------------------------------------------------------------------
 " Resize splits when the window is resized
 au VimResized * :wincmd =
+
+" Show trailing space or tab warnings in the statusline
+autocmd cursorhold,bufwritepost * unlet! b:statusline_trailing_space_warning
+autocmd cursorhold,bufwritepost * unlet! b:statusline_tab_warning
 " ---------------------------------------------------------------------------
 " }}}
 " CSS {{{
@@ -403,30 +351,18 @@ au FileType python syn keyword pythonDecorator True None False self
 " HTML {{{
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 " }}}
+" Better Completions {{{
+" Thanks to Damian Conway for this
+" prevent duplications of auto complete
+augroup Undouble_Completions
+    autocmd!
+    autocmd CompleteDone * call Undouble_Completions()
+augroup END
+"
+" }}}
 " ---------------------------------------------------------------------------
 " }}}
-" Custom Functions and Other stuff ---------------------------------------- {{{
-" Template stuff {{{
-" http://got-ravings.blogspot.in/2008/08/vim-pr0n-simple-template-engine.html
-"
-" define the Template command
-command! -complete=customlist,AvailableTemplates -n=1 Template :call InsertTemplate('<args>')
-
-function! InsertTemplate(name)
-    " read a template
-    execute 'read ~/.vim/templates/' . &filetype . '/' . a:name
-    " if cursor was on a blankline, delete it
-    if getline(line(".")-1) =~ '^\s*$'
-        exec line(".")-1 . 'd'
-    endif
-endfunction
-
-function! AvailableTemplates(lead, cmdline, cursorpos)
-    let templateDir = expand('~/.vim/templates' . &filetype . '/')
-    let files = split(globpath(templateDir, a:lead . '*'), '\n')
-    return map(files, 'strpart(v:val,strlen(templateDir))')
-endfunction
-" }}}
+" Custom Functions -------------------------------------------------------- {{{
 " Nyan cat {{{
 command! NyanMe call NyanMe()
 " ---------------------------------------------------------------------------
@@ -560,11 +496,20 @@ if has("spell")
   set sps=best,10
 endif
 " }}}
+" Better Completions function {{{
+"
+function! Undouble_Completions()
+    let col = getpos('.')[2]
+    let line = getline('.')
+    call setline('.', substitute(line, '\(\.\?\k\+\)\%' . col . 'c\zs\1', '', ''))
+endfunction
+"
+" }}}
 " ---------------------------------------------------------------------------
 " }}}
 " Plugin Settings --------------------------------------------------------- {{{
 " Startify {{{
-
+"
 let g:startify_custom_indices = map(range(1,100), 'string(v:val)')
 let g:startify_session_dir = '~/.vim/session'
 let g:startify_bookmarks = [
@@ -597,40 +542,10 @@ let g:startify_list_order = [
             \ ['   Markers:'],
             \ 'bookmarks'
             \ ]
-" Startify Custom Header
-"let g:startify_custom_header = [
-"\ '  .____---^^     ^^---____.                                                      ',
-"\ '  TI      *       *      IT  Three Rings for the Elvin-Kings under the sky.      ',
-"\ '  !I          *          I!  Seven for the DwarfLords in their halls of stone.   ',
-"\ '   X                     X       Nine for the Mortal Men doomed to die.          ',
-"\ '   XL                   JX       One for the Dark Lord on his dark throne.       ',
-"\ '   II        / \        II   In the Land of Mordor where the Shadow Lies.        ',
-"\ '   II   / \ /   \ / \   II                                                       ',
-"\ '    X  /   v     v   \  X       One Ring to rule them all,One Ring to find them, ',
-"\ '    ``/    _     _    \''     One Ring to bring them all and in the Darkness     ',
-"\ '     \\- _-_ -_- _-_ -//         Bind Them                                       ',
-"\ '       \\_-  -_-  -_//          In the Land of Mordor where the Shadows Lie.     ',
-"\ '         ``       ''                                                             ',
-"\ '           ``-_-''                                                               ',
-"\ '                                                    "Lord Of THe Rings"          ',
-"\ '                                                          by J.R.R. Tolkien      ',
-"\ '',
-"\ ]
 " }}}
 " CtrlP {{{
 
 " make CtrlP exclude these type of files from adding to MRUFiles cache
-" let g:ctrlp_custom_ignore = '~/bin'
-
-""let g:ctrlp_custom_ignore = {
-""            \ 'dir':  '\v[\/](bin|Torrents|Music|Pictures)$',
-""            \ 'file': '\v(\.cpp|\.h|\.hh|\.cxx|\.srt|\.part)@<!$'
-""            \ }
-""let g:ctrlp_custom_ignore = {
-""            \ 'dir':  '\v[\/]\.(git|hg|svn|)$',
-""            \ 'file': '\v\.(exe|so|dll|srt|txt|part)$',
-""            \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
-""            \ }
 let g:ctrlp_mruf_exclude = '*.tar.gz\|bin|.git|*.srt|*.part|*.txt'
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
@@ -653,11 +568,6 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:SuperTabLongestHighlight = 1
 let g:SuperTabCrMapping = 1
 " }}}
-" Indent Guides {{{
-
-let g:indent_guides_guide_size = 1
-" let g:indent_guides_enable_on_vim_startup = 1
-" }}}
 " Vim-G (Search Google from G/Vim itself !) {{{
 
 let g:vim_g_open_command = "xdg-open"
@@ -679,8 +589,16 @@ let g:ale_fixers = {'python' : ['isort','autopep8']}
 let g:ale_python_autopep8_options = '--aggressive'
 let g:ale_fix_on_save = 1
 let g:ale_lint_on_save = 1
+let g:ale_sign_error = '❌'
+" let g:ale_sign_warning = '❎'
+" let g:ale_sign_warning = '◾⛔'
+" let g:ale_sign_warning = '⭕'
+" let g:ale_sign_warning = '🙈'
+let g:ale_sign_warning = '🔹'
+
 "}}}
 " ---------------------------------------------------------------------------
 "}}}
+"
 "
 " vim:foldmethod=marker:foldlevel=0:textwidth=79
